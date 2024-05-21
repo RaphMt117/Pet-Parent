@@ -2,7 +2,20 @@
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				primary: '#2CBBC3',
+				secondary: '#FF9934',
+				primaryAccent: '#E1F1F2',
+				onPrimary: '#FCFCFC',
+				onSecondary: '#FCFCFC',
+				dark: '#252A34',
+				light: '#EAEAEA'
+			},
+			fontFamily: {
+				'sans' : ['Montserrat', 'ui-sans-serif', 'system-ui']
+			}
+		},
 	},
 	plugins: [],
 }
