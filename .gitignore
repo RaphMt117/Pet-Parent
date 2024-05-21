@@ -32,3 +32,16 @@ build/
 ### VS Code ###
 .vscode/
 !/.idea/
+/backend/src/main/resources/application.properties
+/.idea/compiler.xml
+/.idea/encodings.xml
+/backend/HELP.md
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/backend/.idea/misc.xml
+/.idea/modules.xml
+/backend/mvnw
+/backend/mvnw.cmd
+/backend/.idea/uiDesigner.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
