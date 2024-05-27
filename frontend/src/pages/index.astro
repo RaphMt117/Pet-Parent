@@ -1,11 +1,34 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
 import Button from "../components/Button.astro";
 ---
 
 <Layout title="Home | Pet Parent">
-	<Header />
+  <header
+    class="h-12 md:h-20 py-8 px-8 md:px-12 xl:px-28 flex gap-12 items-center justify-between"
+  >
+    <a href="/"><img src="pp_icon.png" alt="" class="w-16" /></a>
+
+    <button
+      id="toggleNavMenu"
+      class="fixed top-0 right-0 p-4 z-20 lg:hidden material-symbols-outlined"
+    >
+      menu
+    </button>
+
+    <div
+      id="navMenu"
+      class="fixed lg:relative top-0 left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95
+    text-center transition-all duration-500
+    flex flex-col lg:flex-row gap-8 items-center justify-center w-full h-0 opacity-0 z-10 lg:h-full lg:opacity-100"
+    >
+      <nav class="lg:flex-1 flex gap-8 flex-col lg:flex-row">
+        <a href="https://davinicoletto.github.io/pet-parent-landing-page/">About</a>
+        <a href="/login">Login</a>
+      </nav>
+    </div>
+  </header>
+
   <main
     class="h-full mt-16 xl:mt-24 px-8 md:px-12 xl:px-28 flex flex-col gap-16 xl:flex-row-reverse xl:items-center"
   >
@@ -18,7 +41,19 @@ import Button from "../components/Button.astro";
           class="text-orange-600 dark:text-orange-400">em um só lugar</span
         >.
       </h1>
-      <Button>
+      <Button route="/login" label="Comece agora!" />
     </div>
   </main>
+
+  <script>
+    document
+      .getElementById("toggleNavMenu")
+      ?.addEventListener("click", function () {
+        const navMenu = document.getElementById("navMenu");
+        navMenu?.classList.toggle("h-0");
+        navMenu?.classList.toggle("h-full");
+        navMenu?.classList.toggle("opacity-0");
+        navMenu?.classList.toggle("opacity-100");
+      });
+  </script>
 </Layout>
