@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LoginService {
-    ResponseEntity<String> login(LoginRequest loginRequest);
+    ResponseEntity<String> addUser(LoginRequest loginRequest);
 }
