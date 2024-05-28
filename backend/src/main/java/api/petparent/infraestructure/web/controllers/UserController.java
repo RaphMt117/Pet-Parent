@@ -1,6 +1,6 @@
-package api.petparent.controllers;
+package api.petparent.infraestructure.web.controllers;
 
-import api.petparent.requests.user.LoginRequest;
+import api.petparent.infraestructure.web.requests.user.LoginRequest;
 import api.petparent.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,157 +1,184 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro'
 ---
+<Layout title='Register'>
+    <header
+        class='h-12 md:h-20 py-8 px-8 md:px-12 xl:px-28 flex gap-12 items-center justify-between'>
+        <a href='/'
+            ><img
+                src='pp_icon.png'
+                alt=''
+                class='w-16'
+            /></a
+        >
 
-<Layout title="Register">
-  <header
-    class="h-12 md:h-20 py-8 px-8 md:px-12 xl:px-28 flex gap-12 items-center justify-between"
-  >
-    <a href="/"><img src="pp_icon.png" alt="" class="w-16" /></a>
+        <button
+            id='toggleNavMenu'
+            class='fixed top-0 right-0 p-4 z-20 lg:hidden material-symbols-outlined'>
+            menu
+        </button>
 
-    <button
-      id="toggleNavMenu"
-      class="fixed top-0 right-0 p-4 z-20 lg:hidden material-symbols-outlined"
-    >
-      menu
-    </button>
-
-    <div
-      id="navMenu"
-      class="fixed lg:relative top-0 left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95
+        <div
+            id='navMenu'
+            class='fixed lg:relative top-0 left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95
     text-center transition-all duration-500
-    flex flex-col lg:flex-row gap-8 items-center justify-center w-full h-0 opacity-0 z-10 lg:h-full lg:opacity-100"
-    >
-      <nav class="lg:flex-1 flex gap-8 flex-col lg:flex-row">
-        <a href="https://davinicoletto.github.io/pet-parent-landing-page/"
-          >Sobre</a
-        >
-        <a href="/">Início</a>
-      </nav>
-    </div>
-  </header>
+    flex flex-col lg:flex-row gap-8 items-center justify-center w-full h-0 opacity-0 z-10 lg:h-full lg:opacity-100'>
+            <nav class='lg:flex-1 flex gap-8 flex-col lg:flex-row'>
+                <a
+                    href='https://davinicoletto.github.io/pet-parent-landing-page/'
+                    >Sobre</a
+                >
+                <a href='/'>Início</a>
+            </nav>
+        </div>
+    </header>
 
-  <main
-    class="h-full mt-16 xl:mt-24 px-8 md:px-12 xl:px-28 flex flex-col gap-16 xl:flex-row-reverse xl:items-center"
-  >
-    <div
-      class="flex min-h-full flex-col justify-start px-6 py-12 lg:px-8 w-full"
-    >
-      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2
-          class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-dark dark:text-light"
-        >
-          Criar uma conta
-        </h2>
-      </div>
+    <main
+        class='h-full mt-16 xl:mt-24 px-8 md:px-12 xl:px-28 flex flex-col gap-16 xl:flex-row-reverse xl:items-center'>
+        <div
+            class='flex min-h-full flex-col justify-start px-6 py-12 lg:px-8 w-full'>
+            <div class='sm:mx-auto sm:w-full sm:max-w-sm'>
+                <h2
+                    class='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-dark dark:text-light'>
+                    Criar uma conta
+                </h2>
+            </div>
 
-      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form id="register-user" class="space-y-6" action="#" method="POST">
-          <div>
-            <label
-              for="email"
-              class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-              >E-mail</label
-            >
-            <div class="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                required
-                class="block w-full rounded-md px-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+            <div class='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+                <form
+                    id='register-user'
+                    class='space-y-6'
+                    action='#'
+                    method='POST'>
+                    <div>
+                        <label
+                            for='email'
+                            class='block text-sm font-medium leading-6 text-gray-900 dark:text-light'
+                            >E-mail</label
+                        >
+                        <div class='mt-2'>
+                            <input
+                                id='email'
+                                name='email'
+                                type='email'
+                                autocomplete='email'
+                                required
+                                class='block w-full rounded-md px-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
+                            />
+                        </div>
+                    </div>
 
-          <div>
-            <div class="flex items-center justify-between">
-              <label
-                for="password"
-                class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-                >Senha</label
-              >
-            </div>
-            <div class="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required
-                class="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <div class="flex items-center justify-between">
-              <label
-                for="password"
-                class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-                >Confirme a senha</label
-              >
-            </div>
-            <div class="mt-2">
-              <input
-                id="confirm-password"
-                name="confirm-password"
-                type="password"
-                autocomplete="current-password"
-                required
-                class="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+                    <div>
+                        <div class='flex items-center justify-between'>
+                            <label
+                                for='password'
+                                class='block text-sm font-medium leading-6 text-gray-900 dark:text-light'
+                                >Senha</label
+                            >
+                        </div>
+                        <div class='mt-2'>
+                            <input
+                                id='password'
+                                name='password'
+                                type='password'
+                                autocomplete='current-password'
+                                required
+                                class='block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <div class='flex items-center justify-between'>
+                            <label
+                                for='password'
+                                class='block text-sm font-medium leading-6 text-gray-900 dark:text-light'
+                                >Confirme a senha</label
+                            >
+                        </div>
+                        <div class='mt-2'>
+                            <input
+                                id='confirm-password'
+                                name='confirm-password'
+                                type='password'
+                                autocomplete='current-password'
+                                required
+                                class='block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                            />
+                        </div>
+                    </div>
 
-          <div>
-            <button
-              id="submit-register"
-              type="submit"
-              class="flex w-full justify-center rounded-md bg-secondary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >Criar conta</button
-            >
-          </div>
-        </form>
-      </div>
-    </div>
-  </main>
+                    <div>           
+                        <button
+                            id='submit-register'
+                            type='button'
+                            class='flex w-full justify-center rounded-md bg-secondary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                            onclick=''
+                            >Criar conta</
+                        >
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    document
+        .getElementById('toggleNavMenu')
+        ?.addEventListener('click', function () {
+            const navMenu = document.getElementById('navMenu')
+            navMenu?.classList.toggle('h-0')
+            navMenu?.classList.toggle('h-full')
+            navMenu?.classList.toggle('opacity-0')
+            navMenu?.classList.toggle('opacity-100')
+        })
+
+
+
+    // if (password !== confirmPassword) {
+    //     console.log('As senhas não coincidem.')
+    //     return
+    // } else {
+
+    document.getElementById("submit-register").addEventListener("click",
+    async function () {
+        console.log("CAIU NO FETCH PORRRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        const emailInput = document.getElementById(
+                        'email'
+                    ) as HTMLInputElement
+        const passwordInput = document.getElementById(
+                        'password'
+                    ) as HTMLInputElement
+        const confirmPasswordInput = document.getElementById(
+                        'confirm-password'
+                    ) as HTMLInputElement
+            
+
+const email = emailInput.value.trim();
+const password = passwordInput.value.trim();
+const confirmPassword = confirmPasswordInput.value.trim();
+
+const firstName = "Davi";
+const lastName = "Dias";
+
+const url = "http://localhost:8080/petparent/api/v1/users/add";
+const data = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    password: password
+}
+
+const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers:{
+        "Content-type": "application/json; charset=UTF-8"
+    }
+})
+.catch(err => console.log('Request Failed', err));
+
+console.log(response)
+    })   
+
+    </script>
 </Layout>
-
-<script>
-
-  document
-    .getElementById("toggleNavMenu")
-    ?.addEventListener("click", function () {
-      const navMenu = document.getElementById("navMenu");
-      navMenu?.classList.toggle("h-0");
-      navMenu?.classList.toggle("h-full");
-      navMenu?.classList.toggle("opacity-0");
-      navMenu?.classList.toggle("opacity-100");
-    });
-
-  document
-    .getElementById("submit-register")
-    ?.addEventListener("click", function () {
-
-
-      const emailInput = document.getElementById("email") as HTMLInputElement;
-      const passwordInput = document.getElementById(
-        "password"
-      ) as HTMLInputElement;
-      const confirmPasswordInput = document.getElementById(
-        "confirm-password"
-      ) as HTMLInputElement;
-
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-      const confirmPassword = confirmPasswordInput.value.trim();
-
-      if (password !== confirmPassword) {
-        console.log("As senhas não coincidem.");
-        return;
-      } else
-        console.log(`Conta criada com o email ${email} e a senha ${password}!`);
-        
-      return;
-    });
-</script>

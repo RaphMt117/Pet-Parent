@@ -1,7 +1,7 @@
 package api.petparent.services.Impl;
 
-import api.petparent.dto.UserDTO;
-import api.petparent.requests.user.LoginRequest;
+import api.petparent.application.ports.in.dto.UserDTO;
+import api.petparent.infraestructure.web.requests.user.LoginRequest;
 import api.petparent.services.LoginService;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
