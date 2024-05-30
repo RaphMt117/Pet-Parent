@@ -1,26 +1,28 @@
 ---
-const {label} = Astro.props;
-const {placeholder} = Astro.props;
-const {field} = Astro.props;
+const { label } = Astro.props;
+const { placeholder } = Astro.props;
+const { field } = Astro.props;
+const { id } = Astro.props;
 ---
 
 <div>
-    <div class="flex items-center justify-between">
-      <label
-        for={ field }
-        class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-        >{label}</label
-      >
-    </div>
-    <div class="mt-2">
-      <input
-        placeholder={placeholder}
-        id={field}
-        name={field}
-        type="text"
-        required
-        maxlength="30"
-        class="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      />
-    </div>
+  <div class="flex items-center justify-between">
+    <label
+      for={field}
+      class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
+      >{label}</label
+    >
   </div>
+  <div class="mt-2">
+    <input
+      id={id}
+      placeholder={placeholder}
+      id={field}
+      name={field}
+      type="text"
+      required
+      maxlength="30"
+      class="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+    />
+  </div>
+</div>

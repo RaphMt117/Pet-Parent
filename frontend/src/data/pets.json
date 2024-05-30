@@ -2,7 +2,7 @@
     {
         "petId":"a",
         "petName": "pipoca",
-        "petSpecies": "Ave",
+        "petSpecies": "Lagarto",
         "petRace": "lulu da pom.",
         "petGender": "femea",
         "petColor": "branca",
@@ -12,7 +12,7 @@
     {
         "petId":"a",
         "petName": "pipoca",
-        "petSpecies": "Gato",
+        "petSpecies": "Anfíbio",
         "petRace": "lulu da pom.",
         "petGender": "femea",
         "petColor": "branca",
@@ -20,3 +20,4 @@
         "petAge": "2 anos"
     }
 ]
+
