@@ -129,8 +129,7 @@ import Header from "../components/Header.astro";
   const loginForm = document.getElementById("login");
   loginForm?.addEventListener("submit", login);
 
-  async function login(event) {
-    event.preventDefault();
+  async function login() {
 
     const emailInput = document.getElementById(
       "loginEmail"
@@ -168,7 +167,7 @@ import Header from "../components/Header.astro";
         alert("Houve um erro no servidor. Tente novamente mais tarde.");
       }
     } catch (e) {
-      alert("Não foi possível criar a conta: " + e.message);
+      alert("Não foi possível criar a conta: " + e);
     }
   }
 </script>

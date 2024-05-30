@@ -1,0 +1,22 @@
+[
+    {
+        "id": "a",
+        "title": "my event",
+        "start": "2024-05-20"
+    },
+    {
+        "id": "b",
+        "title": "my event",
+        "start": "2024-05-20"
+    },
+    {
+        "id": "c",
+        "title": "my event",
+        "start": "2024-05-20"
+    },
+    {
+        "id": "d",
+        "title": "my event",
+        "start": "2024-05-20"
+    }
+]

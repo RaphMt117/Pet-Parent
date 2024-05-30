@@ -1,50 +1,137 @@
 ---
-import Header from "../components/Header.astro"
-import Layout from "../layouts/Layout.astro"
+import Header from "../components/Header.astro";
+import PetCard from "../components/PetCard.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="homePage">
-<Header title="Meus compromissos"/>
+  <Header title="Meus compromissos" />
 
-<main class="flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full">
-  <section class="w-full p-2 mx-5">
-    <div class="w-full shadow-md">
-      <div class="mx-5">
+  <main
+    class="flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full"
+  >
+    <section class="w-full p-2">
+      <div class="calendar-container w-full shadow-md rounded-md p-6">
         <h2 class="text-2xl">Meus compromissos</h2>
         <div id="calendar"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="w-full p-2">
-    <div class="w-full bg-blue-400">
-      
-    </div>
-  </section>
-
-</main>
-
+    <section class="w-full p-2">
+      <div class="w-full shadow-md rounded-md p-6">
+        <h2 class="text-2xl mb-3">Meus Pets Cadastrados</h2>
+        <div id="pets-container">
+          <PetCard />
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
+
 <script>
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import ptBrLocale from '@fullcalendar/core/locales/pt-br';
+  import { Calendar } from "@fullcalendar/core";
+  import dayGridPlugin from "@fullcalendar/daygrid";
+  import interactionPlugin from "@fullcalendar/interaction";
+  import ptBrLocale from "@fullcalendar/core/locales/pt-br";
+  import { EventInput } from "@fullcalendar/core";
+  import { object } from "astro/zod";
 
+  async function loadTasksData() {
+    try {
+      const response = await fetch("src/data/tasks.json");
 
-function initializeCalendar(): void {
-  document.addEventListener('DOMContentLoaded', () => {
-    const calendarEl = document.getElementById('calendar') as HTMLElement;
+      if (!response.ok) {
+        throw new Error("Erro ao carregar o arquivo JSON");
+      }
+
+      const tasks = await response.json();
+      return tasks;
+    } catch (e) {
+      console.error("Erro:", e);
+    }
+  }
+
+  loadTasksData().then((tasks) => {
+    initializeCalendar(tasks);
+    console.log(tasks);
+  });
+
+  function initializeCalendar(events: EventInput[]): void {
+    console.log("calendario");
+
+    const calendarEl = document.getElementById("calendar") as HTMLElement;
     if (calendarEl) {
       const calendar = new Calendar(calendarEl, {
-        plugins: [dayGridPlugin],
-        initialView: 'dayGridMonth',
+        plugins: [dayGridPlugin, interactionPlugin],
+        initialView: "dayGridMonth",
+        selectable: true,
         locale: ptBrLocale,
-        events: });
+        events: events,
+        eventContent: function (arg) {
+          return {
+            html: `<div class="bg-primary text-white p-2 rounded overflow-hidden">${arg.event.title}</div>`,
+          };
+        },
+        dayHeaderContent: function (arg) {
+          return {
+            html: `<div class="text-center text-secondary font-bold">${arg.text}</div>`,
+          };
+        },
+      });
+      console.log("CALEDNARA");
       calendar.render();
     }
+  }
+
+  async function loadPetsData() {
+    try {
+      const response = await fetch("src/data/pets.json");
+
+      if (!response.ok) {
+        throw new Error("Erro ao carregar o arquivo JSON");
+      }
+
+      const pets = await response.json();
+      return pets;
+    } catch (e) {
+      console.error("Erro:", e);
+    }
+  }
+
+  function getPetIcon (type){
+    const icons = {
+      Cachorro: "dog-icon.png",
+      Gato: "cat-icon.png",
+      Ave: "bird-icon.png",
+      Hamster: "hamster-icon.png"
+    }
+    // icons.forEach(element => {
+      
+    // });
+  }
+
+  await loadPetsData().then((pets) => {
+    pets.forEach((pet) => {
+      console.log(pet);
+      const container = document.getElementById("pets-container");
+      if (container) {
+        console.log("PETPETPETPET");
+        const li = document.createElement("li");
+        li.classList.add('list-none')
+        li.innerHTML = `<div class="w-full h-full flex pet-card shadow-md p-3 rounded-lg items-center">
+      <img src="dog-icon.png" alt="" class="w-16 h-16 mx-5" />
+      <div class="">
+        <h3 class="text-lg font-bold">${pet.petName}</h3>
+        <div>
+          <p>${pet.petSpecies}</p>
+          <p>${pet.petGender}</p>
+          <p>${pet.petAge}</p>
+        </div>
+      </div>
+    </div>`;
+        container.appendChild(li);
+        console.log("AAAAAAAAAAAA");
+      }
+    });
   });
-}
-
-initializeCalendar();
-
 </script>

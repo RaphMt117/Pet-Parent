@@ -1,0 +1,22 @@
+[
+    {
+        "petId":"a",
+        "petName": "pipoca",
+        "petSpecies": "cachorro",
+        "petRace": "lulu da pom.",
+        "petGender": "femea",
+        "petColor": "branca",
+        "petPorte": "pequeno",
+        "petAge": "2 anos"
+    },
+    {
+        "petId":"a",
+        "petName": "pipoca",
+        "petSpecies": "cachorro",
+        "petRace": "lulu da pom.",
+        "petGender": "femea",
+        "petColor": "branca",
+        "petPorte": "pequeno",
+        "petAge": "2 anos"
+    }
+]
