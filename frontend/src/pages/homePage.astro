@@ -21,8 +21,11 @@ import Layout from "../layouts/Layout.astro";
       <div class="w-full shadow-md rounded-md p-6">
         <h2 class="text-2xl mb-3">Meus Pets Cadastrados</h2>
         <div id="pets-container">
-          <PetCard />
+
         </div>
+        <button>
+
+        </button>
       </div>
     </section>
   </main>
@@ -34,7 +37,6 @@ import Layout from "../layouts/Layout.astro";
   import interactionPlugin from "@fullcalendar/interaction";
   import ptBrLocale from "@fullcalendar/core/locales/pt-br";
   import { EventInput } from "@fullcalendar/core";
-  import { object } from "astro/zod";
 
   async function loadTasksData() {
     try {
@@ -98,37 +100,43 @@ import Layout from "../layouts/Layout.astro";
     }
   }
 
-  function getPetIcon (type){
+  function getPetIcon(type) {
     const icons = {
       Cachorro: "dog-icon.png",
       Gato: "cat-icon.png",
       Ave: "bird-icon.png",
-      Hamster: "hamster-icon.png"
-    }
-    // icons.forEach(element => {
-      
-    // });
+      Lagarto: "lizard-icon.png",
+      Serpente: "snake-icon.png",
+      Anfíbio: "amphibian-icon.png",
+      Roedor: "hamster-icon.png",
+    };
+    return icons[type] || "paw-icon.png";
   }
 
   await loadPetsData().then((pets) => {
     pets.forEach((pet) => {
       console.log(pet);
+      const iconImage = getPetIcon(pet.petSpecies);
       const container = document.getElementById("pets-container");
       if (container) {
         console.log("PETPETPETPET");
         const li = document.createElement("li");
-        li.classList.add('list-none')
+        li.classList.add("list-none");
         li.innerHTML = `<div class="w-full h-full flex pet-card shadow-md p-3 rounded-lg items-center">
-      <img src="dog-icon.png" alt="" class="w-16 h-16 mx-5" />
-      <div class="">
-        <h3 class="text-lg font-bold">${pet.petName}</h3>
-        <div>
-          <p>${pet.petSpecies}</p>
-          <p>${pet.petGender}</p>
-          <p>${pet.petAge}</p>
-        </div>
-      </div>
-    </div>`;
+          <img src="${iconImage}" alt="" class="w-16 h-16 mx-5" />
+          <div class="flex justify-between w-full">
+            <div class="">
+              <h3 class="text-lg font-bold">${pet.petName}</h3>
+              <div>
+                <p>${pet.petSpecies}</p>
+                <p>${pet.petGender}</p>
+                <p>${pet.petAge}</p>
+              </div>
+            </div>
+            <button class="material-symbols-outlined text-red-600 mr-4"/>delete
+            
+          <div/>
+          </div>`;
         container.appendChild(li);
         console.log("AAAAAAAAAAAA");
       }
