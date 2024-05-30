@@ -1,8 +1,8 @@
-package api.petparent.services.Impl;
+package api.petparent.application.core.service.Impl;
 
-import api.petparent.application.ports.in.dto.UserDTO;
+import api.petparent.application.core.service.UserService;
+import api.petparent.application.core.dto.UserDTO;
 import api.petparent.infraestructure.web.requests.user.LoginRequest;
-import api.petparent.services.LoginService;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +12,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @NoArgsConstructor
-public class loginServiceImpl implements LoginService {
+public class UserServiceImpl implements UserService {
 
-    private static final Logger log = LoggerFactory.getLogger(loginServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
     public ResponseEntity<String> addUser(LoginRequest loginRequest) {
-        log.info("Login request received: {}", loginRequest);
 
         UserDTO userDTO = new UserDTO();
         userDTO.setFullName(loginRequest.getFirstName() + " " + loginRequest.getLastName());

@@ -1,0 +1,298 @@
+openapi: "3.1.0"
+info:
+  title: Pet Parent API
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080/petparent/api/v1"
+tags:
+  - name: pet
+    description: Everything about your Pets
+  - name: user
+    description: Operations about user
+  - name: task
+    description: Tasks
+paths:
+  /pet:
+    post:
+      tags:
+        - pet
+      summary: Add pet
+      description: Add pet
+      operationId: addPet
+      requestBody:
+        description: Pet info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Pet adicionado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Erro ao adicionar pet
+        '500':
+          description: Erro de servidor
+  /list/{userId}:
+    get:
+      tags:
+        - pet
+      summary: List pets related by user
+      description: Array of objects
+      operationId: listPets
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid values
+  /pet/{petId}:
+    get:
+      tags:
+        - pet
+      summary: Find pet by ID
+      description: Returns a single pet
+      operationId: getPetById
+      parameters:
+        - name: petId
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+    delete:
+      tags:
+        - pet
+      summary: Deletes a pet
+      description: delete a pet
+      operationId: deletePet
+      parameters:
+        - name: petId
+          in: path
+          description: Pet id to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pet deletado
+        '404':
+          description: Pet nao encontrado
+  /user:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/login:
+    get:
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      parameters:
+        - name: email
+          in: query
+          description: The user email for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+  /user/{email}:
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      description: ''
+      operationId: getUserByName
+      parameters:
+        - name: email
+          in: path
+          description: 'The email that needs to be fetched.'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid email supplied
+        '404':
+          description: User not found
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: email
+          in: path
+          description: The email of the user that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        UserObject:
+          type: object
+          schema:
+            $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: 'Davi'
+        lastName:
+          type: string
+          example: 'Dias'
+        email:
+          type: string
+          example: davi.dias@gmail.com
+        password:
+          type: string
+          example: '6253796'
+        tasks:
+          type: object
+          properties:
+            taskTitle:
+              type: string
+            taskDescription:
+              type: string
+            taskPet:
+              type: string
+            taskDate:
+              type: string
+    Pet:
+      required:
+        - petName
+      type: string
+      properties:
+        petName:
+          type: string
+          example: pipoca
+        petSpecies:
+          type: string
+        petRace:
+          type: string
+        petSize:
+          type: string
+          enum:
+            - pequeno
+            - medio
+            - grande
+        petGender:
+          type: string
+        petColor:
+          type: string
+        petAge:
+          type: string
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  requestBodies:
+    Pet:
+      description: Pet object that needs to be added to the user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+    PetArray:
+      description: List of pets object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Pet'
