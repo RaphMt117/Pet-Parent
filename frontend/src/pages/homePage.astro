@@ -4,16 +4,19 @@ import Layout from "../layouts/Layout.astro"
 ---
 
 <Layout title="homePage">
-<Header />
+<Header title="Meus compromissos"/>
 
-<main class="flex flex-col lg:flex-row lg:w-full justify-start lg:justify-between h-full">
-  <section class="w-full">
-    <div class="w-full bg-red-400">
-      
+<main class="flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full">
+  <section class="w-full p-2 mx-5">
+    <div class="w-full shadow-md">
+      <div class="mx-5">
+        <h2 class="text-2xl">Meus compromissos</h2>
+        <div id="calendar"></div>
+      </div>
     </div>
   </section>
 
-  <section class="w-full">
+  <section class="w-full p-2">
     <div class="w-full bg-blue-400">
       
     </div>
@@ -22,7 +25,26 @@ import Layout from "../layouts/Layout.astro"
 </main>
 
 </Layout>
-
 <script>
-  
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import ptBrLocale from '@fullcalendar/core/locales/pt-br';
+
+
+function initializeCalendar(): void {
+  document.addEventListener('DOMContentLoaded', () => {
+    const calendarEl = document.getElementById('calendar') as HTMLElement;
+    if (calendarEl) {
+      const calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin],
+        initialView: 'dayGridMonth',
+        locale: ptBrLocale,
+        events: });
+      calendar.render();
+    }
+  });
+}
+
+initializeCalendar();
+
 </script>
