@@ -32,7 +32,7 @@ import Header from "../components/Header.astro";
   </header>
 
   <main
-    class="h-full mt-16 xl:mt-24 px-8 md:px-12 xl:px-28 flex flex-col gap-16 xl:flex-row-reverse xl:items-center"
+    class="h-full px-8 md:px-12 xl:px-28 flex flex-col gap-16 xl:flex-row-reverse xl:items-center"
   >
     <div
       class="flex min-h-full flex-col justify-start px-6 py-12 lg:px-8 w-full"
@@ -116,14 +116,15 @@ import Header from "../components/Header.astro";
 </Layout>
 
 <script>
-
-  document.getElementById("toggleNavMenu")?.addEventListener("click", function () {
-    const navMenu = document.getElementById("navMenu");
-    navMenu?.classList.toggle("h-0");
-    navMenu?.classList.toggle("h-full");
-    navMenu?.classList.toggle("opacity-0");
-    navMenu?.classList.toggle("opacity-100");
-  });
+  document
+    .getElementById("toggleNavMenu")
+    ?.addEventListener("click", function () {
+      const navMenu = document.getElementById("navMenu");
+      navMenu?.classList.toggle("h-0");
+      navMenu?.classList.toggle("h-full");
+      navMenu?.classList.toggle("opacity-0");
+      navMenu?.classList.toggle("opacity-100");
+    });
 
   const loginForm = document.getElementById("login");
   loginForm?.addEventListener("submit", login);
@@ -131,9 +132,12 @@ import Header from "../components/Header.astro";
   async function login(event) {
     event.preventDefault();
 
-
-    const emailInput = document.getElementById("loginEmail") as HTMLInputElement;
-    const passwordInput = document.getElementById("password") as HTMLInputElement;
+    const emailInput = document.getElementById(
+      "loginEmail"
+    ) as HTMLInputElement;
+    const passwordInput = document.getElementById(
+      "password"
+    ) as HTMLInputElement;
 
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
@@ -145,7 +149,7 @@ import Header from "../components/Header.astro";
     };
 
     try {
-    alert("LOGIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
+      alert("LOGIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
 
       const response = await fetch(url, {
         method: "POST",
@@ -157,6 +161,7 @@ import Header from "../components/Header.astro";
 
       if (response.ok) {
         alert("LOGOU PORAAAAAAAAAAAAAAAAAAAAA");
+        window.location.href = "/homePage";
       } else if (response.status === 400) {
         alert("Ops! Credenciais inválidas.");
       } else if (response.status === 500) {
