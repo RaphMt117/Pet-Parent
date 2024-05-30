@@ -2,56 +2,6 @@
     {
         "petId":"a",
         "petName": "pipoca",
-        "petSpecies": "Cachorro",
-        "petRace": "lulu da pom.",
-        "petGender": "femea",
-        "petColor": "branca",
-        "petPorte": "pequeno",
-        "petAge": "2 anos"
-    },
-    {
-        "petId":"a",
-        "petName": "pipoca",
-        "petSpecies": "Serpente",
-        "petRace": "lulu da pom.",
-        "petGender": "femea",
-        "petColor": "branca",
-        "petPorte": "pequeno",
-        "petAge": "2 anos"
-    },
-    {
-        "petId":"a",
-        "petName": "pipoca",
-        "petSpecies": "Lagarto",
-        "petRace": "lulu da pom.",
-        "petGender": "femea",
-        "petColor": "branca",
-        "petPorte": "pequeno",
-        "petAge": "2 anos"
-    },
-    {
-        "petId":"a",
-        "petName": "pipoca",
-        "petSpecies": "Roedor",
-        "petRace": "lulu da pom.",
-        "petGender": "femea",
-        "petColor": "branca",
-        "petPorte": "pequeno",
-        "petAge": "2 anos"
-    },
-    {
-        "petId":"a",
-        "petName": "pipoca",
-        "petSpecies": "Anfíbio",
-        "petRace": "lulu da pom.",
-        "petGender": "femea",
-        "petColor": "branca",
-        "petPorte": "pequeno",
-        "petAge": "2 anos"
-    },
-    {
-        "petId":"a",
-        "petName": "pipoca",
         "petSpecies": "Ave",
         "petRace": "lulu da pom.",
         "petGender": "femea",

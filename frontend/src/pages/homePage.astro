@@ -1,6 +1,6 @@
 ---
 import Header from "../components/Header.astro";
-import PetCard from "../components/PetCard.astro";
+import TextFormField from "../components/TextFormField.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -8,7 +8,7 @@ import Layout from "../layouts/Layout.astro";
   <Header title="Meus compromissos" />
 
   <main
-    class="flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full"
+    class="mt-20 flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full"
   >
     <section class="w-full p-2">
       <div class="calendar-container w-full shadow-md rounded-md p-6">
@@ -20,13 +20,61 @@ import Layout from "../layouts/Layout.astro";
     <section class="w-full p-2">
       <div class="w-full shadow-md rounded-md p-6">
         <h2 class="text-2xl mb-3">Meus Pets Cadastrados</h2>
+        <button id="add-new-pet" class="w-full bg-green-600 material-symbols-outlined p-3 rounded-2xl">
+          add
+        </button>
         <div id="pets-container">
 
         </div>
-        <button>
-
-        </button>
       </div>
+    </section>
+
+    <section id="new-pet-form" class="fixed top-0 left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
+    flex flex-col gap-8 items-center justify-center w-full h-0 opacity-0 z-10">
+     <h2 class="text-xl text-primary">Adicionar novo Pet</h2>
+      <form class="bg-light dark:bg-dark">
+        <div class="flex items-baseline gap-3">
+          <TextFormField label="Nome" field="petName" />
+          <div class="flex flex-col gap-[8px]">
+            <label for="pet-species-input" class="block text-sm font-medium leading-6 text-gray-900 dark:text-light">Que tipo de pet é?</label>
+            <select name="pet-species-input" id="pet-species-input" class="text-dark h-[36px] rounded-md" required>
+              <option value="#" selected disabled>Selecione</option>
+              <option value="Cachorro">Cachorro</option>
+              <option value="Gato">Gato</option>
+              <option value="Roedor">Roedor</option>
+              <option value="Ave">Ave</option>
+              <option value="Lagarto">Lagarto</option>
+              <option value="Serpente">Serpente</option>
+              <option value="Anfíbio">Anfíbio</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+        <TextFormField label="Idade" field="petAge" />
+        <TextFormField label="Cor" field="petColor" />
+        <div class="flex flex-col items-start w-full gap-[8px]">
+          <label for="pet-species-input" class="block text-sm font-medium leading-6 text-gray-900 dark:text-light">Sexo</label>
+          <select name="pet-species-input" id="pet-species-input" class="text-dark h-[36px] rounded-md w-full" required>
+            <option value="#" selected disabled>Selecione</option>
+            <option value="macho">Fêmea</option>
+            <option value="femea">Macho</option>
+            <option value="desconhecido">Gênero Desconhecido</option>
+          </select>
+
+        <div class="flex flex-col items-start w-full gap-[8px]">
+          <label for="pet-species-input" class="block text-sm font-medium leading-6 text-gray-900 dark:text-light">Porte</label>
+          <select name="pet-species-input" id="pet-species-input" class="text-dark h-[36px] rounded-md w-full" required>
+            <option value="#" selected disabled>Selecione</option>
+            <option value="pequeno">Pequeno</option>
+            <option value="medio">Médio</option>
+            <option value="grande">Grande</option>
+           
+          </select>
+        </form>
+        <div class="flex justify-between w-full gap-2 mt-3">
+          <button id="close-pet-form" type="button" class=" hover:text-red-700 rounded-lg px-4 py-2">Cancelar</button>
+          <button type="button" class="bg-green-600 hover:bg-emerald-800 rounded-lg px-4 py-2">Adicionar</button>
+        </div>
     </section>
   </main>
 </Layout>
@@ -133,7 +181,7 @@ import Layout from "../layouts/Layout.astro";
                 <p>${pet.petAge}</p>
               </div>
             </div>
-            <button class="material-symbols-outlined text-red-600 mr-4"/>delete
+            <button id="remove-pet" class="material-symbols-outlined text-red-600 mr-4"/>delete
             
           <div/>
           </div>`;
@@ -142,4 +190,23 @@ import Layout from "../layouts/Layout.astro";
       }
     });
   });
+
+  document
+    .getElementById("add-new-pet")
+    ?.addEventListener("click", function () {
+      const newPetForm = document.getElementById("new-pet-form");
+      newPetForm?.classList.toggle("h-0");
+      newPetForm?.classList.toggle("h-full");
+      newPetForm?.classList.toggle("opacity-0");
+      newPetForm?.classList.toggle("opacity-100");
+    });
+  document
+    .getElementById("close-pet-form")
+    ?.addEventListener("click", function () {
+      const newPetForm = document.getElementById("new-pet-form");
+      newPetForm?.classList.toggle("h-0");
+      newPetForm?.classList.toggle("h-full");
+      newPetForm?.classList.toggle("opacity-0");
+      newPetForm?.classList.toggle("opacity-100");
+    });
 </script>
