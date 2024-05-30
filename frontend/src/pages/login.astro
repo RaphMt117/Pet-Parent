@@ -34,7 +34,9 @@ import Header from "../components/Header.astro";
   <main
     class="h-full mt-16 xl:mt-24 px-8 md:px-12 xl:px-28 flex flex-col gap-16 xl:flex-row-reverse xl:items-center"
   >
-    <div class="flex min-h-full flex-col justify-start px-6 py-12 lg:px-8 w-full">
+    <div
+      class="flex min-h-full flex-col justify-start px-6 py-12 lg:px-8 w-full"
+    >
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2
           class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-dark dark:text-light"
@@ -44,19 +46,19 @@ import Header from "../components/Header.astro";
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
+        <form id="login" class="space-y-6" action="#" method="POST">
           <div>
             <label
-              for="email"
+              for="loginEmail"
               class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
               >E-mail</label
             >
             <div class="mt-2">
               <input
-                id="email"
-                name="email"
+                id="loginEmail"
+                name="loginEmail"
                 type="email"
-                autocomplete="email"
+                autocomplete="loginEmail"
                 required
                 class="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
               />
@@ -92,6 +94,7 @@ import Header from "../components/Header.astro";
 
           <div>
             <button
+              id="loginButton"
               type="submit"
               class="flex w-full justify-center rounded-md bg-secondary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >Entrar</button
@@ -113,19 +116,54 @@ import Header from "../components/Header.astro";
 </Layout>
 
 <script>
-  document
-    .getElementById("toggleNavMenu")
-    ?.addEventListener("click", function () {
-      const navMenu = document.getElementById("navMenu");
-      navMenu?.classList.toggle("h-0");
-      navMenu?.classList.toggle("h-full");
-      navMenu?.classList.toggle("opacity-0");
-      navMenu?.classList.toggle("opacity-100");
-    });
 
-    function login (){
+  document.getElementById("toggleNavMenu")?.addEventListener("click", function () {
+    const navMenu = document.getElementById("navMenu");
+    navMenu?.classList.toggle("h-0");
+    navMenu?.classList.toggle("h-full");
+    navMenu?.classList.toggle("opacity-0");
+    navMenu?.classList.toggle("opacity-100");
+  });
 
-      
+  const loginForm = document.getElementById("login");
+  loginForm?.addEventListener("submit", login);
 
+  async function login(event) {
+    event.preventDefault();
+
+
+    const emailInput = document.getElementById("loginEmail") as HTMLInputElement;
+    const passwordInput = document.getElementById("password") as HTMLInputElement;
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    const url = "http://localhost:8080/petparent/api/v1/users/add";
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    try {
+    alert("LOGIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      if (response.ok) {
+        alert("LOGOU PORAAAAAAAAAAAAAAAAAAAAA");
+      } else if (response.status === 400) {
+        alert("Ops! Credenciais inválidas.");
+      } else if (response.status === 500) {
+        alert("Houve um erro no servidor. Tente novamente mais tarde.");
+      }
+    } catch (e) {
+      alert("Não foi possível criar a conta: " + e.message);
     }
+  }
 </script>

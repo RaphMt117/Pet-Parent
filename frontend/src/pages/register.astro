@@ -146,7 +146,7 @@ import Layout from "../layouts/Layout.astro";
           <div>
             <button
               id="submit-register"
-              type="button"
+              type="submit"
               class="flex w-full justify-center rounded-md bg-secondary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               onclick="">Criar conta</button
             >
@@ -156,6 +156,7 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </main>
 </Layout>
+
 <script>
   document
     .getElementById("toggleNavMenu")
@@ -168,8 +169,8 @@ import Layout from "../layouts/Layout.astro";
     });
 
   document
-    .getElementById("submit-register")
-    .addEventListener("click", async function () {
+    .getElementById("register-user")
+    .addEventListener("submit", async function () {
       const emailInput = document.getElementById("email") as HTMLInputElement;
       const passwordInput = document.getElementById(
         "password"
@@ -201,29 +202,28 @@ import Layout from "../layouts/Layout.astro";
       if (password !== confirmPassword) {
         alert("As senhas não coincidem.");
         return;
-      }else if (password.length <8){
-        alert("A senha precisa ter mais de 8 dígitos.")
-      } 
-      else {
-        try{
+      } else if (password.length < 8) {
+        alert("A senha precisa ter mais de 8 dígitos.");
+      } else {
+        try {
           const response = await fetch(url, {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        });
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
 
-        if(response.ok){
-          alert('CONTA CRIADAAAAA')
-        } else if (response.status === 400){
-          alert("Ops! Houve um erro ao registrar a conta.")
-        } else if (response.status === 500){
-          alert("Houve um erro no servidor. Tente novamente mais tarde.")
+          if (response.ok) {
+            alert("CONTA CRIADAAAAA");
+          } else if (response.status === 400) {
+            alert("Ops! Houve um erro ao registrar a conta.");
+          } else if (response.status === 500) {
+            alert("Houve um erro no servidor. Tente novamente mais tarde.");
+          }
+        } catch (e) {
+          alert("não foi possível criar a conta." + e.message);
         }
-      }catch(e){
-        alert("não foi possível criar a conta." + e.message)
       }
-        
-    }})
+    });
 </script>
