@@ -1,50 +1,212 @@
 ---
-import Header from "../components/Header.astro"
-import Layout from "../layouts/Layout.astro"
+import Header from "../components/Header.astro";
+import TextFormField from "../components/TextFormField.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="homePage">
-<Header title="Meus compromissos"/>
+  <Header title="Meus compromissos" />
 
-<main class="flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full">
-  <section class="w-full p-2 mx-5">
-    <div class="w-full shadow-md">
-      <div class="mx-5">
+  <main
+    class="mt-20 flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full"
+  >
+    <section class="w-full p-2">
+      <div class="calendar-container w-full shadow-md rounded-md p-6">
         <h2 class="text-2xl">Meus compromissos</h2>
         <div id="calendar"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="w-full p-2">
-    <div class="w-full bg-blue-400">
-      
-    </div>
-  </section>
+    <section class="w-full p-2">
+      <div class="w-full shadow-md rounded-md p-6">
+        <h2 class="text-2xl mb-3">Meus Pets Cadastrados</h2>
+        <button id="add-new-pet" class="w-full bg-green-600 material-symbols-outlined p-3 rounded-2xl">
+          add
+        </button>
+        <div id="pets-container">
 
-</main>
+        </div>
+      </div>
+    </section>
 
+    <section id="new-pet-form" class="fixed top-0 left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
+    flex flex-col gap-8 items-center justify-center w-full h-0 opacity-0 z-10">
+     <h2 class="text-xl text-primary">Adicionar novo Pet</h2>
+      <form class="bg-light dark:bg-dark">
+        <div class="flex items-baseline gap-3">
+          <TextFormField label="Nome" field="petName" />
+          <div class="flex flex-col gap-[8px]">
+            <label for="pet-species-input" class="block text-sm font-medium leading-6 text-gray-900 dark:text-light">Que tipo de pet é?</label>
+            <select name="pet-species-input" id="pet-species-input" class="text-dark h-[36px] rounded-md" required>
+              <option value="#" selected disabled>Selecione</option>
+              <option value="Cachorro">Cachorro</option>
+              <option value="Gato">Gato</option>
+              <option value="Roedor">Roedor</option>
+              <option value="Ave">Ave</option>
+              <option value="Lagarto">Lagarto</option>
+              <option value="Serpente">Serpente</option>
+              <option value="Anfíbio">Anfíbio</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+        <TextFormField label="Idade" field="petAge" />
+        <TextFormField label="Cor" field="petColor" />
+        <div class="flex flex-col items-start w-full gap-[8px]">
+          <label for="pet-species-input" class="block text-sm font-medium leading-6 text-gray-900 dark:text-light">Sexo</label>
+          <select name="pet-species-input" id="pet-species-input" class="text-dark h-[36px] rounded-md w-full" required>
+            <option value="#" selected disabled>Selecione</option>
+            <option value="macho">Fêmea</option>
+            <option value="femea">Macho</option>
+            <option value="desconhecido">Gênero Desconhecido</option>
+          </select>
+
+        <div class="flex flex-col items-start w-full gap-[8px]">
+          <label for="pet-species-input" class="block text-sm font-medium leading-6 text-gray-900 dark:text-light">Porte</label>
+          <select name="pet-species-input" id="pet-species-input" class="text-dark h-[36px] rounded-md w-full" required>
+            <option value="#" selected disabled>Selecione</option>
+            <option value="pequeno">Pequeno</option>
+            <option value="medio">Médio</option>
+            <option value="grande">Grande</option>
+           
+          </select>
+        </form>
+        <div class="flex justify-between w-full gap-2 mt-3">
+          <button id="close-pet-form" type="button" class=" hover:text-red-700 rounded-lg px-4 py-2">Cancelar</button>
+          <button type="button" class="bg-green-600 hover:bg-emerald-800 rounded-lg px-4 py-2">Adicionar</button>
+        </div>
+    </section>
+  </main>
 </Layout>
+
 <script>
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import ptBrLocale from '@fullcalendar/core/locales/pt-br';
+  import { Calendar } from "@fullcalendar/core";
+  import dayGridPlugin from "@fullcalendar/daygrid";
+  import interactionPlugin from "@fullcalendar/interaction";
+  import ptBrLocale from "@fullcalendar/core/locales/pt-br";
+  import { EventInput } from "@fullcalendar/core";
 
+  async function loadTasksData() {
+    try {
+      const response = await fetch("src/data/tasks.json");
 
-function initializeCalendar(): void {
-  document.addEventListener('DOMContentLoaded', () => {
-    const calendarEl = document.getElementById('calendar') as HTMLElement;
+      if (!response.ok) {
+        throw new Error("Erro ao carregar o arquivo JSON");
+      }
+
+      const tasks = await response.json();
+      return tasks;
+    } catch (e) {
+      console.error("Erro:", e);
+    }
+  }
+
+  loadTasksData().then((tasks) => {
+    initializeCalendar(tasks);
+    console.log(tasks);
+  });
+
+  function initializeCalendar(events: EventInput[]): void {
+    console.log("calendario");
+
+    const calendarEl = document.getElementById("calendar") as HTMLElement;
     if (calendarEl) {
       const calendar = new Calendar(calendarEl, {
-        plugins: [dayGridPlugin],
-        initialView: 'dayGridMonth',
+        plugins: [dayGridPlugin, interactionPlugin],
+        initialView: "dayGridMonth",
+        selectable: true,
         locale: ptBrLocale,
-        events: });
+        events: events,
+        eventContent: function (arg) {
+          return {
+            html: `<div class="bg-primary text-white p-2 rounded overflow-hidden">${arg.event.title}</div>`,
+          };
+        },
+        dayHeaderContent: function (arg) {
+          return {
+            html: `<div class="text-center text-secondary font-bold">${arg.text}</div>`,
+          };
+        },
+      });
+      console.log("CALEDNARA");
       calendar.render();
     }
+  }
+
+  async function loadPetsData() {
+    try {
+      const response = await fetch("src/data/pets.json");
+
+      if (!response.ok) {
+        throw new Error("Erro ao carregar o arquivo JSON");
+      }
+
+      const pets = await response.json();
+      return pets;
+    } catch (e) {
+      console.error("Erro:", e);
+    }
+  }
+
+  function getPetIcon(type) {
+    const icons = {
+      Cachorro: "dog-icon.png",
+      Gato: "cat-icon.png",
+      Ave: "bird-icon.png",
+      Lagarto: "lizard-icon.png",
+      Serpente: "snake-icon.png",
+      Anfíbio: "amphibian-icon.png",
+      Roedor: "hamster-icon.png",
+    };
+    return icons[type] || "paw-icon.png";
+  }
+
+  await loadPetsData().then((pets) => {
+    pets.forEach((pet) => {
+      console.log(pet);
+      const iconImage = getPetIcon(pet.petSpecies);
+      const container = document.getElementById("pets-container");
+      if (container) {
+        console.log("PETPETPETPET");
+        const li = document.createElement("li");
+        li.classList.add("list-none");
+        li.innerHTML = `<div class="w-full h-full flex pet-card shadow-md p-3 rounded-lg items-center">
+          <img src="${iconImage}" alt="" class="w-16 h-16 mx-5" />
+          <div class="flex justify-between w-full">
+            <div class="">
+              <h3 class="text-lg font-bold">${pet.petName}</h3>
+              <div>
+                <p>${pet.petSpecies}</p>
+                <p>${pet.petGender}</p>
+                <p>${pet.petAge}</p>
+              </div>
+            </div>
+            <button id="remove-pet" class="material-symbols-outlined text-red-600 mr-4"/>delete
+            
+          <div/>
+          </div>`;
+        container.appendChild(li);
+        console.log("AAAAAAAAAAAA");
+      }
+    });
   });
-}
 
-initializeCalendar();
-
+  document
+    .getElementById("add-new-pet")
+    ?.addEventListener("click", function () {
+      const newPetForm = document.getElementById("new-pet-form");
+      newPetForm?.classList.toggle("h-0");
+      newPetForm?.classList.toggle("h-full");
+      newPetForm?.classList.toggle("opacity-0");
+      newPetForm?.classList.toggle("opacity-100");
+    });
+  document
+    .getElementById("close-pet-form")
+    ?.addEventListener("click", function () {
+      const newPetForm = document.getElementById("new-pet-form");
+      newPetForm?.classList.toggle("h-0");
+      newPetForm?.classList.toggle("h-full");
+      newPetForm?.classList.toggle("opacity-0");
+      newPetForm?.classList.toggle("opacity-100");
+    });
 </script>
