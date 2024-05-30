@@ -130,7 +130,7 @@ import Layout from "../layouts/Layout.astro";
     >
       <h2 class="text-xl text-primary">Adicionar nova tarefa</h2>
       <form class="">
-        <div class="flex flex-col items-center gap-3">
+        <div class="flex flex-col items-center gap-3 w-full">
           <TextFormField
             id="task-title-input"
             label="Titulo"
@@ -147,6 +147,12 @@ import Layout from "../layouts/Layout.astro";
             label="Hora"
             field="taskHour"
             placeholder="xx:xx"
+          />
+          <TextFormField
+            id="task-pet-input"
+            label="De quem é o compromisso?"
+            field="taskPet"
+            placeholder="Nome do pet"
           />
         </div>
         <div class="flex justify-between w-full gap-2 mt-3">
@@ -328,10 +334,51 @@ import Layout from "../layouts/Layout.astro";
         .getElementById("new-task-form")
         ?.addEventListener("submit", createTask);
 
-      function createTask() {
-        const titleInput = document.getElementById("task-title-input");
-        const dateInput = document.getElementById("task-date-input");
-        const hourInput = document.getElementById("task-hour-input");
+      async function createTask() {
+        const titleInput = document.getElementById(
+          "task-title-input"
+        ) as HTMLInputElement;
+        const dateInput = document.getElementById(
+          "task-date-input"
+        ) as HTMLInputElement;
+        const hourInput = document.getElementById(
+          "task-hour-input"
+        ) as HTMLInputElement;
+        const taskPetInput = document.getElementById(
+          "task-pet-input"
+        ) as HTMLInputElement;
+
+        const taskTitle = titleInput.value.trim();
+        const taskDate = dateInput.value.trim();
+        const taskHour = hourInput.value.trim();
+        const taskPet = taskPetInput.value.trim();
+
+        const url = "src/data/tasks.json";
+        const taskData = {
+          taskTitle: taskTitle,
+          taskDate: taskDate,
+          taskHour: taskHour,
+          taskPet: taskPet,
+        };
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(taskData),
+          });
+          if (response.ok) {
+            console.log("DEU CERTO ADICIONOU TASK");
+            window.location.href = "/homePage";
+          } else if (response.status === 400) {
+            console.log("Ops! Dados inseridos inválidos, tente novamente.");
+          } else if (response.status === 500) {
+            console.log(
+              "Houve um erro no servidor. Tente novamente mais tarde."
+            );
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
     </script>
   </main>
