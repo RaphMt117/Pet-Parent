@@ -17,10 +17,17 @@ import java.util.concurrent.ExecutionException;
 @Getter
 @Setter
 @Repository
-public class UserRepository{
+public class UserRepository {
 
     public ResponseEntity<String> addUser(LoginRequest loginRequest) throws ExecutionException, InterruptedException {
         CollectionReference db = FirestoreClient.getFirestore().collection("Users");
+
+        ApiFuture<QuerySnapshot> future = db.whereEqualTo("email", loginRequest.getEmail()).get();
+
+        if (!future.get().isEmpty()) {
+            log.info("User already exists");
+            return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
+        }
 
         ApiFuture<DocumentReference> newUser = db.add(loginRequest);
 
@@ -48,5 +55,10 @@ public class UserRepository{
             log.info("User not found");
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    public ResponseEntity<String> loginUser(LoginRequest loginRequest) {
+
+        return null;
     }
 }

@@ -42,6 +42,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<String> loginUser(LoginRequest loginRequest) {
+
+        var response = userRepository.loginUser(loginRequest);
+
         return null;
     }
 }
