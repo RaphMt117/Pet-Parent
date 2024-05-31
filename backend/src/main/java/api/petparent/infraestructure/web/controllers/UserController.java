@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("petparent/api/v1/user")
 public class UserController {
+
     @Autowired
     private final UserService userService;
 
@@ -38,10 +39,10 @@ public class UserController {
     }
 
     @DeleteMapping("/{email}")
-    public ResponseEntity<String> deleteUser(@PathVariable String email) {
+    public ResponseEntity<String> deleteUser(@PathVariable String email) throws ExecutionException, InterruptedException {
 
         userService.deleteUser(email);
 
-        return new ResponseEntity<>("Invalid request, null parameters", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("User Deleted", HttpStatus.OK);
     }
 }

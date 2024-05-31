@@ -40,3 +40,4 @@ build/
 /.mvn/wrapper/maven-wrapper.jar
 /.idea/jarRepositories.xml
 /.mvn/wrapper/maven-wrapper.properties!/src/main/resources/serviceAccountKey.json
+!**/src/resouces/serviceAccountKey.json

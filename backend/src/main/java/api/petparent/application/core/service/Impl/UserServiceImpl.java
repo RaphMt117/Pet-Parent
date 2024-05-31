@@ -33,8 +33,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> deleteUser(String email) {
-        return null;
+    public ResponseEntity<String> deleteUser(String email) throws ExecutionException, InterruptedException {
+
+        var response = userRepository.deleteUser(email);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Override

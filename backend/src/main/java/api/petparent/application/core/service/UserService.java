@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 public interface UserService {
     ResponseEntity<String> addUser(LoginRequest loginRequest) throws ExecutionException, InterruptedException;
 
-    ResponseEntity<String> deleteUser(String email);
+    ResponseEntity<String> deleteUser(String email) throws ExecutionException, InterruptedException;
 
     ResponseEntity<String> loginUser(LoginRequest loginRequest);
 }
