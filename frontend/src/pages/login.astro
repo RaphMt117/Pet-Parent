@@ -129,7 +129,8 @@ import Header from "../components/Header.astro";
   const loginForm = document.getElementById("login");
   loginForm?.addEventListener("submit", login);
 
-  async function login() {
+  async function login(event) {
+    event.preventDefault();
 
     const emailInput = document.getElementById(
       "loginEmail"
@@ -141,25 +142,19 @@ import Header from "../components/Header.astro";
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
-    const url = "http://localhost:8080/petparent/api/v1/users/add";
-    const data = {
-      email: email,
-      password: password,
-    };
+    const url = `http://localhost:8080/petparent/api/v1/user/login?email=${email}&password=${password}`;
+
 
     try {
       alert("LOGIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
 
       const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+        method: "GET",
       });
 
       if (response.ok) {
         alert("LOGOU PORAAAAAAAAAAAAAAAAAAAAA");
+        localStorage.setItem('user', JSON.stringify(response))
         window.location.href = "/homePage";
       } else if (response.status === 400) {
         alert("Ops! Credenciais inválidas.");
