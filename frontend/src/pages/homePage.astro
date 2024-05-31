@@ -48,13 +48,13 @@ import Layout from "../layouts/Layout.astro";
           <TextFormField label="Nome" field="petName" />
           <div class="flex flex-col gap-[8px]">
             <label
-              for="pet-species-input"
+              for="petSpecies"
               class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
               >Que tipo de pet é?</label
             >
             <select
-              name="pet-species-input"
-              id="pet-species-input"
+              name="petSpecies"
+              id="petSpecies"
               class="text-dark h-[36px] rounded-md"
               required
             >
@@ -70,43 +70,63 @@ import Layout from "../layouts/Layout.astro";
             </select>
           </div>
         </div>
-        <TextFormField label="Idade (anos)" field="petAge" />
+
+        <div class="flex flex-col items-start gap-[8px] w-full">
+          <label
+            for="petAge"
+            class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
+            >Idade (anos)</label
+          >
+          <input
+            type="number"
+            id="petAge"
+            name="petAge"
+            min="0"
+            max="200"
+            placeholder="Apenas números"
+            class="text-dark w-full px-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset
+          ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+
         <TextFormField label="Raça" field="petRace" />
+
         <TextFormField label="Cor" field="petColor" />
+
         <div class="flex flex-col items-start w-full gap-[8px]">
           <label
-            for="pet-species-input"
+            for="petGender"
             class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
             >Sexo</label
           >
           <select
-            name="pet-species-input"
-            id="pet-species-input"
+            name="petGender"
+            id="petGender"
             class="text-dark h-[36px] rounded-md w-full"
             required
           >
             <option value="#" selected disabled>Selecione</option>
-            <option value="macho">Fêmea</option>
-            <option value="femea">Macho</option>
-            <option value="desconhecido">Gênero Desconhecido</option>
+            <option value="Macho">Fêmea</option>
+            <option value="Femea">Macho</option>
+            <option value="Desconhecido">Gênero Desconhecido</option>
           </select>
 
           <div class="flex flex-col items-start w-full gap-[8px]">
             <label
-              for="pet-species-input"
+              for="petSize"
               class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
               >Porte</label
             >
             <select
-              name="pet-species-input"
-              id="pet-species-input"
+              name="petSize"
+              id="petSize"
               class="text-dark h-[36px] rounded-md w-full"
               required
             >
               <option value="#" selected disabled>Selecione</option>
-              <option value="pequeno">Pequeno</option>
-              <option value="medio">Médio</option>
-              <option value="grande">Grande</option>
+              <option value="Pequeno">Pequeno</option>
+              <option value="Medio">Médio</option>
+              <option value="Grande">Grande</option>
             </select>
           </div>
           <div class="flex justify-between w-full gap-2 mt-3">
@@ -172,117 +192,125 @@ import Layout from "../layouts/Layout.astro";
       </form>
     </section>
 
-    <script>
-      import { Calendar } from "@fullcalendar/core";
-      import dayGridPlugin from "@fullcalendar/daygrid";
-      import interactionPlugin from "@fullcalendar/interaction";
-      import ptBrLocale from "@fullcalendar/core/locales/pt-br";
-      import { EventInput } from "@fullcalendar/core";
+    <footer class="">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga itaque
+        eius mollitia sunt aperiam molestiae exercitationem voluptas natus,
+        consequuntur enim molestias ipsum deleniti nulla maxime repudiandae
+        dolorem odit tempore? Distinctio.
+      </p>
+    </footer>
+  </main>
+</Layout>
 
-      
-      document
-        .getElementById("new-task-form")
-        ?.addEventListener("submit", createTask);
+<script>
+  import { Calendar } from "@fullcalendar/core";
+  import dayGridPlugin from "@fullcalendar/daygrid";
+  import interactionPlugin from "@fullcalendar/interaction";
+  import ptBrLocale from "@fullcalendar/core/locales/pt-br";
+  import { EventInput } from "@fullcalendar/core";
 
-      async function createTask(event) {
-        event.preventDefault();
+  document
+    .getElementById("new-task-form")
+    ?.addEventListener("submit", createTask);
 
-        const titleInput = document.getElementById(
-          "task-title-input"
-        ) as HTMLInputElement;
-        const dateInput = document.getElementById(
-          "task-date-input"
-        ) as HTMLInputElement;
+  async function createTask(event) {
+    event.preventDefault();
 
-        const hourInput = document.getElementById(
-          "task-hour-input"
-        ) as HTMLInputElement;
-        const taskPetInput = document.getElementById(
-          "task-pet-input"
-        ) as HTMLInputElement;
+    const titleInput = document.getElementById(
+      "task-title-input"
+    ) as HTMLInputElement;
+    const dateInput = document.getElementById(
+      "task-date-input"
+    ) as HTMLInputElement;
 
-        const taskTitle = titleInput.value.trim();
-        let taskDate = dateInput.value.trim();
-        const taskHour = hourInput.value.trim();
-        const taskPet = taskPetInput.value.trim();
+    const hourInput = document.getElementById(
+      "task-hour-input"
+    ) as HTMLInputElement;
+    const taskPetInput = document.getElementById(
+      "task-pet-input"
+    ) as HTMLInputElement;
 
-        if (taskDate) {
-          const parts = taskDate.split("-");
-          if (parts.length === 3) {
-            const date = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
-            if (!isNaN(date.getTime())) {
-              taskDate = date.toLocaleDateString("pt-BR"); // Salvar a data em um formato padronizado
-            } else {
-              console.error("Data inválida:", taskDate);
-              return;
-            }
-          } else {
-            console.error("Formato de data inválido:", taskDate);
-            return;
-          }
+    const taskTitle = titleInput.value.trim();
+    let taskDate = dateInput.value.trim();
+    const taskHour = hourInput.value.trim();
+    const taskPet = taskPetInput.value.trim();
+
+    if (taskDate) {
+      const parts = taskDate.split("-");
+      if (parts.length === 3) {
+        const date = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+        if (!isNaN(date.getTime())) {
+          taskDate = date.toLocaleDateString("pt-BR"); // Salvar a data em um formato padronizado
+        } else {
+          console.error("Data inválida:", taskDate);
+          return;
         }
-        const url = "src/data/tasks.json";
-        const taskData = {
-          title: taskTitle,
-          start: taskDate,
-          // taskHour: taskHour,
-          pet: taskPet,
-        };
+      } else {
+        console.error("Formato de data inválido:", taskDate);
+        return;
+      }
+    }
+    const url = "src/data/tasks.json";
+    const taskData = {
+      title: taskTitle,
+      start: taskDate,
+      // taskHour: taskHour,
+      pet: taskPet,
+    };
 
-        try {
-          const response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(taskData),
-          });
-          if (response.ok) {
-            console.log("DEU CERTO ADICIONOU TASK");
-            console.log(taskData);
-            toggleTaskForm();
-          } else if (response.status === 400) {
-            console.log("Ops! Dados inseridos inválidos, tente novamente.");
-          } else if (response.status === 500) {
-            console.log(
-              "Houve um erro no servidor. Tente novamente mais tarde."
-            );
-          }
-        } catch (e) {
-          console.log(e);
-        }
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(taskData),
+      });
+      if (response.ok) {
+        console.log("DEU CERTO ADICIONOU TASK");
+        console.log(taskData);
+        toggleTaskForm();
+      } else if (response.status === 400) {
+        console.log("Ops! Dados inseridos inválidos, tente novamente.");
+      } else if (response.status === 500) {
+        console.log("Houve um erro no servidor. Tente novamente mais tarde.");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function loadTasksData() {
+    try {
+      const response = await fetch("src/data/tasks.json");
+
+      if (!response.ok) {
+        throw new Error("Erro ao carregar o arquivo JSON");
       }
 
-      async function loadTasksData() {
-        try {
-          const response = await fetch("src/data/tasks.json");
+      const tasks = await response.json();
+      return tasks;
+    } catch (e) {
+      console.error("Erro:", e);
+    }
+  }
 
-          if (!response.ok) {
-            throw new Error("Erro ao carregar o arquivo JSON");
-          }
+  loadTasksData().then((tasks) => {
+    tasks.sort((a, b) => {
+      return new Date(a.start).getTime() - new Date(b.start).getTime();
+    });
 
-          const tasks = await response.json();
-          return tasks;
-        } catch (e) {
-          console.error("Erro:", e);
-        }
-      }
+    initializeCalendar(tasks);
+    console.log(tasks);
 
-      loadTasksData().then((tasks) => {
-        tasks.sort((a, b) => {
-          return new Date(a.start).getTime() - new Date(b.start).getTime();
-        });
-
-        initializeCalendar(tasks);
-        console.log(tasks);
-
-        tasks.forEach((task) => {
-          const taskDate = new Date(task.start);
-          const formattedDate = taskDate.toLocaleDateString("pt-BR");
-          console.log(task);
-          console.log(formattedDate);
-          const container = document.getElementById("tasks-container");
-          if (container) {
-            const li = document.createElement("li");
-            li.classList.add("list-none");
-            li.innerHTML = `<div class="w-full h-full flex task-card shadow-md p-3 rounded-lg items-center">
+    tasks.forEach((task) => {
+      const taskDate = new Date(task.start);
+      const formattedDate = taskDate.toLocaleDateString("pt-BR");
+      console.log(task);
+      console.log(formattedDate);
+      const container = document.getElementById("tasks-container");
+      if (container) {
+        const li = document.createElement("li");
+        li.classList.add("list-none");
+        li.innerHTML = `<div class="w-full h-full flex task-card shadow-md p-3 rounded-lg items-center">
           <div class="flex justify-between w-full">
             <div class="">
               <h3 class="text-lg font-bold">${task.title}</h3>
@@ -295,113 +323,113 @@ import Layout from "../layouts/Layout.astro";
  
           <div/>
           </div>`;
-            container.appendChild(li);
-          }
-        });
+        container.appendChild(li);
+      }
+    });
+  });
+
+  function initializeCalendar(events: EventInput[]): void {
+    console.log("calendario");
+
+    const calendarEl = document.getElementById("calendar") as HTMLElement;
+    if (calendarEl) {
+      const calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin, interactionPlugin],
+        initialView: "dayGridMonth",
+        selectable: true,
+        locale: ptBrLocale,
+        events: events,
+        eventContent: function (arg) {
+          return {
+            html: `<div class="bg-primary text-white p-2 rounded overflow-hidden">${arg.event.title}</div>`,
+          };
+        },
+        dayHeaderContent: function (arg) {
+          return {
+            html: `<div class="text-center text-secondary font-bold">${arg.text}</div>`,
+          };
+        },
+      });
+      console.log("CALEDNARA");
+      calendar.render();
+    }
+  }
+
+  document
+    .getElementById("add-new-pet-form")
+    ?.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const petForm = event.target as HTMLFormElement;
+      const formData = new FormData(petForm);
+
+      const petData: { [key: string]: any } = {};
+
+      formData.forEach((value, key) => {
+        petData[key] = value;
       });
 
-      function initializeCalendar(events: EventInput[]): void {
-        console.log("calendario");
+      console.log(petData);
 
-        const calendarEl = document.getElementById("calendar") as HTMLElement;
-        if (calendarEl) {
-          const calendar = new Calendar(calendarEl, {
-            plugins: [dayGridPlugin, interactionPlugin],
-            initialView: "dayGridMonth",
-            selectable: true,
-            locale: ptBrLocale,
-            events: events,
-            eventContent: function (arg) {
-              return {
-                html: `<div class="bg-primary text-white p-2 rounded overflow-hidden">${arg.event.title}</div>`,
-              };
-            },
-            dayHeaderContent: function (arg) {
-              return {
-                html: `<div class="text-center text-secondary font-bold">${arg.text}</div>`,
-              };
-            },
-          });
-          console.log("CALEDNARA");
-          calendar.render();
-        }
+      const userId = "ZSPZBDz2VESQ2S6kQD1m";
+      const url = `http://localhost:8080/petparent/api/v1/pet/${userId}`;
+      petData.petAge = petData.petAge + " anos";
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(petData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      if (response.status === 200) {
+        alert("Pet adicionado!");
+        togglePetForm();
+      } else if (response.status === 400) {
+        alert("Ops! Houve um erro ao adicionar seu pet.");
+      } else if (response.status === 500) {
+        alert("Houve um erro no servidor. Tente novamente mais tarde.");
+      }
+    });
+
+  async function loadPetsData() {
+    try {
+      const response = await fetch("src/data/pets.json");
+
+      if (!response.ok) {
+        throw new Error("Erro ao carregar o arquivo JSON");
       }
 
-      document
-        .getElementById("add-new-pet-form")
-        ?.addEventListener("submit", async function (event) {
-          event.preventDefault();
+      const pets = await response.json();
+      return pets;
+    } catch (e) {
+      console.error("Erro:", e);
+    }
+  }
 
-          const petForm = event.target as HTMLFormElement;
-          const formData = new FormData(petForm);
+  function getPetIcon(type) {
+    const icons = {
+      Cachorro: "dog-icon.png",
+      Gato: "cat-icon.png",
+      Ave: "bird-icon.png",
+      Lagarto: "lizard-icon.png",
+      Serpente: "snake-icon.png",
+      Anfíbio: "amphibian-icon.png",
+      Roedor: "hamster-icon.png",
+    };
+    return icons[type] || "paw-icon.png";
+  }
 
-          const petData: { [key: string]: any } = {};
-
-          formData.forEach((value, key) => {
-            petData[key] = value;
-          });
-
-          console.log(petData);
-
-          const url = "http://localhost:8080/petparent/api/v1/pet";
-          const userId = "2SHSVyCMAQopdsKsTOH0";
-          petData.userId = userId;
-
-          const response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(petData),
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-          });
-
-          if (response.status === 200) {
-            alert("Pet adicionado!");
-            togglePetForm();
-          } else if (response.status === 400) {
-            alert("Ops! Houve um erro ao adicionar seu pet.");
-          } else if (response.status === 500) {
-            alert("Houve um erro no servidor. Tente novamente mais tarde.");
-          }
-        });
-
-      async function loadPetsData() {
-        try {
-          const response = await fetch("src/data/pets.json");
-
-          if (!response.ok) {
-            throw new Error("Erro ao carregar o arquivo JSON");
-          }
-
-          const pets = await response.json();
-          return pets;
-        } catch (e) {
-          console.error("Erro:", e);
-        }
-      }
-
-      function getPetIcon(type) {
-        const icons = {
-          Cachorro: "dog-icon.png",
-          Gato: "cat-icon.png",
-          Ave: "bird-icon.png",
-          Lagarto: "lizard-icon.png",
-          Serpente: "snake-icon.png",
-          Anfíbio: "amphibian-icon.png",
-          Roedor: "hamster-icon.png",
-        };
-        return icons[type] || "paw-icon.png";
-      }
-
-      await loadPetsData().then((pets) => {
-        pets.forEach((pet) => {
-          console.log(pet);
-          const iconImage = getPetIcon(pet.petSpecies);
-          const container = document.getElementById("pets-container");
-          if (container) {
-            const li = document.createElement("li");
-            li.classList.add("list-none");
-            li.innerHTML = `<div class="w-full h-full flex pet-card shadow-md p-3 rounded-lg items-center">
+  await loadPetsData().then((pets) => {
+    pets.forEach((pet) => {
+      console.log(pet);
+      const iconImage = getPetIcon(pet.petSpecies);
+      const container = document.getElementById("pets-container");
+      if (container) {
+        const li = document.createElement("li");
+        li.classList.add("list-none");
+        li.innerHTML = `<div class="w-full h-full flex pet-card shadow-md p-3 rounded-lg items-center">
           <img src="${iconImage}" alt="" class="w-16 h-16 mx-5" />
           <div class="flex justify-between w-full">
             <div class="">
@@ -416,47 +444,44 @@ import Layout from "../layouts/Layout.astro";
  
           <div/>
           </div>`;
-            container.appendChild(li);
-          }
-        });
-      });
-
-
-      document
-        .getElementById("add-new-pet")
-        ?.addEventListener("click", togglePetForm);
-
-      document
-        .getElementById("close-pet-form")
-        ?.addEventListener("click", togglePetForm);
-
-      function togglePetForm() {
-        const newPetForm = document.getElementById("new-pet-form");
-        newPetForm?.classList.toggle("h-0");
-        newPetForm?.classList.toggle("h-full");
-        newPetForm?.classList.toggle("opacity-0");
-        newPetForm?.classList.toggle("opacity-100");
-        newPetForm?.classList.toggle("top-[-300px]");
-        newPetForm?.classList.toggle("top-0");
+        container.appendChild(li);
       }
+    });
+  });
 
-      document
-        .getElementById("add-new-task")
-        ?.addEventListener("click", toggleTaskForm);
+  document
+    .getElementById("add-new-pet")
+    ?.addEventListener("click", togglePetForm);
 
-      document
-        .getElementById("close-task-form")
-        ?.addEventListener("click", toggleTaskForm);
+  document
+    .getElementById("close-pet-form")
+    ?.addEventListener("click", togglePetForm);
 
-      function toggleTaskForm() {
-        const newTaskForm = document.getElementById("new-task-form");
-        newTaskForm?.classList.toggle("h-0");
-        newTaskForm?.classList.toggle("h-full");
-        newTaskForm?.classList.toggle("opacity-0");
-        newTaskForm?.classList.toggle("opacity-100");
-        newTaskForm?.classList.toggle("top-[-300px]");
-        newTaskForm?.classList.toggle("top-0");
-      }
-    </script>
-  </main>
-</Layout>
+  function togglePetForm() {
+    const newPetForm = document.getElementById("new-pet-form");
+    newPetForm?.classList.toggle("h-0");
+    newPetForm?.classList.toggle("h-full");
+    newPetForm?.classList.toggle("opacity-0");
+    newPetForm?.classList.toggle("opacity-100");
+    newPetForm?.classList.toggle("top-[-300px]");
+    newPetForm?.classList.toggle("top-0");
+  }
+
+  document
+    .getElementById("add-new-task")
+    ?.addEventListener("click", toggleTaskForm);
+
+  document
+    .getElementById("close-task-form")
+    ?.addEventListener("click", toggleTaskForm);
+
+  function toggleTaskForm() {
+    const newTaskForm = document.getElementById("new-task-form");
+    newTaskForm?.classList.toggle("h-0");
+    newTaskForm?.classList.toggle("h-full");
+    newTaskForm?.classList.toggle("opacity-0");
+    newTaskForm?.classList.toggle("opacity-100");
+    newTaskForm?.classList.toggle("top-[-300px]");
+    newTaskForm?.classList.toggle("top-0");
+  }
+</script>
