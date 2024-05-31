@@ -160,6 +160,7 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <script>
+
   document
     .getElementById("toggleNavMenu")
     ?.addEventListener("click", function () {
@@ -172,7 +173,8 @@ import Layout from "../layouts/Layout.astro";
 
   document
     .getElementById("register-user")
-    ?.addEventListener("submit", async function () {
+    ?.addEventListener("submit", async function (event) {
+      event.preventDefault();
       const emailInput = document.getElementById("email") as HTMLInputElement;
       const passwordInput = document.getElementById(
         "password"
@@ -194,37 +196,38 @@ import Layout from "../layouts/Layout.astro";
       const firstName = firstNameInput.value.trim();
       const lastName = lastNameInput.value.trim();
 
-      const url = "http://localhost:8080/petparent/api/v1/users/add";
+      const url = "http://localhost:8080/petparent/api/v1/user/add";
       const data = {
         firstName: firstName,
         lastName: lastName,
         email: email,
         password: password,
       };
+
       if (password !== confirmPassword) {
         alert("As senhas não coincidem.");
         return;
       } else if (password.length < 8) {
         alert("A senha precisa ter mais de 8 dígitos.");
       } else {
-        try {
-          const response = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-          });
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
 
-          if (response.ok) {
-            alert("CONTA CRIADAAAAA");
-          } else if (response.status === 400) {
-            alert("Ops! Houve um erro ao registrar a conta.");
-          } else if (response.status === 500) {
-            alert("Houve um erro no servidor. Tente novamente mais tarde.");
-          }
-        } catch (e) {
-          alert("não foi possível criar a conta. Erro:" + e);
+        if (response.status === 200) {
+        alert("Conta criada com sucesso!");
+        window.location.href = "/login";
+
+        } else if (response.status === 400) {
+          alert("Ops! Houve um erro ao registrar a conta.");
+        } else if (response.status === 409) {
+          alert("Este usuário já foi cadastrado.");
+        } else if (response.status === 500) {
+          alert("Houve um erro no servidor. Tente novamente mais tarde.");
         }
       }
     });
