@@ -33,6 +33,7 @@ build/
 .vscode/
 !/.idea/
 /backend/src/main/resources/application.properties
+/backend/src/main/resources/serviceAccountKey.json
 /.idea/compiler.xml
 /.idea/encodings.xml
 /backend/HELP.md
