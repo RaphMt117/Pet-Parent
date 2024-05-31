@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
         var response = userRepository.addUser(loginRequest);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
         var response = userRepository.deleteUser(email);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 
     @Override
