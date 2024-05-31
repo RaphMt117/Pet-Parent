@@ -47,7 +47,7 @@ public class TasksController {
         return response;
     }
 
-    @DeleteMapping("/{userId}/{taskId}")
+    @GetMapping("/{userId}/{taskId}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable String taskId, @PathVariable String userId) {
 
         var response = taskService.getTask(taskId, userId);

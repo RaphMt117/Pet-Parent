@@ -1,5 +1,6 @@
 package api.petparent.infraestructure.repository;
 
+import api.petparent.application.core.dto.UserDTO;
 import api.petparent.infraestructure.web.requests.LoginRequest;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -58,5 +59,29 @@ public class UserRepository {
     public ResponseEntity<String> loginUser(LoginRequest loginRequest) {
 
         return null;
+    }
+
+    public ResponseEntity<UserDTO> getUser(String email) {
+        CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
+        ApiFuture<QuerySnapshot> future = db.whereEqualTo("email", email).get();
+
+        var userDTO = new UserDTO();
+        try {
+            DocumentSnapshot document = future.get().getDocuments().get(0);
+            if (document.exists()) {
+                userDTO.setUserId(document.getId());
+                userDTO.setFirstName(document.getString("firstName"));
+                userDTO.setLastName(document.getString("lastName"));
+                userDTO.setEmail(document.getString("email"));
+                log.info("User found");
+                return new ResponseEntity<>(userDTO, HttpStatus.OK);
+            } else {
+                log.info("User not found");
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+        } catch (IndexOutOfBoundsException | ExecutionException | InterruptedException e) {
+            log.info("User not found");
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 }

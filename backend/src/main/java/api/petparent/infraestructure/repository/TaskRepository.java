@@ -1,8 +1,11 @@
 package api.petparent.infraestructure.repository;
 
+import api.petparent.application.core.dto.TaskDTO;
+import api.petparent.application.core.dto.UserDTO;
 import api.petparent.infraestructure.web.requests.AddTaskRequestModel;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
@@ -62,14 +65,33 @@ public class TaskRepository {
     }
 
 
-    public ResponseEntity<String> getTask(String taskId, String userId) {
+    public ResponseEntity<TaskDTO> getTask(String taskId, String userId) {
+        CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
+        ApiFuture<QuerySnapshot> future = db.document().collection("tasks").whereEqualTo("taskId", taskId).get();
 
-        return null;
+        var taskDTO = new TaskDTO();
+        try {
+            DocumentSnapshot document = future.get().getDocuments().get(0);
+            if (document.exists()) {
+                taskDTO.setTaskId(document.getString("taskId"));
+                taskDTO.setTaskName(document.getString("taskName"));
+                taskDTO.setTaskDesc(document.getString("taskDesc"));
+                taskDTO.setTaskDate(document.getString("taskDate"));
+                taskDTO.setTaskPet(document.getString("taskPet"));
+
+                log.info("Task found: {}", taskDTO);
+                return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+            } else {
+                log.info("Task not found");
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+        } catch (IndexOutOfBoundsException | ExecutionException | InterruptedException e) {
+            log.info("Task not found");
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
-
     public ResponseEntity<String> updateTask(String taskId, String userId, AddTaskRequestModel taskRequest) {
-
         return null;
     }
 }

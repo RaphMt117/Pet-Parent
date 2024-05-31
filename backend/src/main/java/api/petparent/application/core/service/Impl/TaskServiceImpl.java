@@ -6,6 +6,7 @@ import api.petparent.infraestructure.repository.TaskRepository;
 import api.petparent.infraestructure.web.requests.AddTaskRequestModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public ResponseEntity<String> addTask(String userId, AddTaskRequestModel taskRequest) throws ExecutionException, InterruptedException {
         var response = taskRepository.addTask(userId, taskRequest);
-        return null;
+        return response;
     }
 
     @Override
@@ -34,13 +35,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public ResponseEntity<String> deleteTask(String taskId, String userId) throws ExecutionException, InterruptedException {
         var response = taskRepository.deleteTask(taskId, userId);
-        return null;
+        return response;
     }
 
     @Override
     public ResponseEntity<TaskDTO> getTask(String taskId, String userId) {
         var response = taskRepository.getTask(taskId, userId);
-        return null;
+        return response;
     }
 
     @Override

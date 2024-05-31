@@ -1,5 +1,6 @@
 package api.petparent.application.core.service.Impl;
 
+import api.petparent.application.core.dto.UserDTO;
 import api.petparent.application.core.service.UserService;
 import api.petparent.infraestructure.repository.UserRepository;
 import api.petparent.infraestructure.web.requests.LoginRequest;
@@ -36,10 +37,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<UserDTO> getUser(String email) throws ExecutionException, InterruptedException {
+
+        var response = userRepository.getUser(email);
+
+        return response;
+    }
+
+    @Override
     public ResponseEntity<String> loginUser(LoginRequest loginRequest) {
 
         var response = userRepository.loginUser(loginRequest);
 
-        return null;
+        return response;
     }
 }
