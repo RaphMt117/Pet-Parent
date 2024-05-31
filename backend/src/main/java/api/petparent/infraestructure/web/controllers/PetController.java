@@ -1,15 +1,13 @@
 package api.petparent.infraestructure.web.controllers;
 
 import api.petparent.application.core.service.PetService;
-import api.petparent.infraestructure.web.requests.pet.AddPetRequestModel;
+import api.petparent.infraestructure.web.requests.AddPetRequestModel;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -25,9 +23,9 @@ public class PetController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addPet(@RequestBody AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException {
+    public ResponseEntity<String> addPet(@PathVariable String userId, @RequestBody AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException {
 
-            var response = petService.addPet(addPetRequestModel);
+            var response = petService.addPet(userId, addPetRequestModel);
 
             return response;
     }
@@ -43,10 +41,11 @@ public class PetController {
         }
     }
 
-    @GetMapping("/{petId}")
-    public ResponseEntity<String> getPet(@PathVariable String petId) {
+    @GetMapping("/{userId}/{petId}")
+    public ResponseEntity<String> getPet(@PathVariable String userId, @PathVariable String petId) {
         try {
-            log.info("Getting pet: {}", petId);
+            petService.getPet(userId, petId);
+            log.info("Getting pet: {}, from user: {}", petId, userId);
             return new ResponseEntity<>("Pet retrieved", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error getting pet", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -57,7 +56,6 @@ public class PetController {
     public ResponseEntity<String> deletePet(@PathVariable String petId) {
         try {
             log.info("Deleting pet: {}", petId);
-
 
             return new ResponseEntity<>("Pet deleted", HttpStatus.OK);
 

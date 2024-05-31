@@ -1,13 +1,11 @@
-package api.petparent.infraestructure.web.requests.pet;
+package api.petparent.infraestructure.web.requests;
 
 import lombok.*;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddPetRequestModel {
-    private String userId;
     private String petName;
     private String petSpecies;
     private String petRace;

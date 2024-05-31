@@ -1,6 +1,6 @@
 package api.petparent.infraestructure.repository;
 
-import api.petparent.infraestructure.web.requests.user.LoginRequest;
+import api.petparent.infraestructure.web.requests.LoginRequest;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
@@ -36,7 +36,6 @@ public class UserRepository {
 
     public ResponseEntity<String> deleteUser(String email) throws ExecutionException, InterruptedException {
         CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
-
 
         try {
             ApiFuture<QuerySnapshot> future = db.whereEqualTo("email", email).get();

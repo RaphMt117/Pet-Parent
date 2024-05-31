@@ -1,6 +1,6 @@
 package api.petparent.application.core.service;
 
-import api.petparent.infraestructure.web.requests.user.LoginRequest;
+import api.petparent.infraestructure.web.requests.LoginRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

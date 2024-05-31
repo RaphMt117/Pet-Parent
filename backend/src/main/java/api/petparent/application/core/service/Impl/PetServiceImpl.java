@@ -2,8 +2,7 @@ package api.petparent.application.core.service.Impl;
 
 import api.petparent.application.core.service.PetService;
 import api.petparent.infraestructure.repository.PetRepository;
-import api.petparent.infraestructure.web.requests.pet.AddPetRequestModel;
-import lombok.NoArgsConstructor;
+import api.petparent.infraestructure.web.requests.AddPetRequestModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,9 @@ public class PetServiceImpl implements PetService {
     private final PetRepository petRepository;
 
     @Override
-    public ResponseEntity<String> addPet(AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException {
+    public ResponseEntity<String> addPet(String userId, AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException {
 
-        var response = petRepository.addPet(addPetRequestModel);
+        var response = petRepository.addPet(userId, addPetRequestModel);
 
         return response;
     }
@@ -32,7 +31,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public ResponseEntity<String> getPet(String petId) {
+    public ResponseEntity<String> getPet(String userId, String petId) {
         return null;
     }
 

@@ -1,4 +1,4 @@
-package api.petparent.infraestructure.web.requests.user;
+package api.petparent.infraestructure.web.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
