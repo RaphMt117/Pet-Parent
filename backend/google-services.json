@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "711494594692",
+    "firebase_url": "https://petparent-961e5-default-rtdb.firebaseio.com",
+    "project_id": "petparent-961e5",
+    "storage_bucket": "petparent-961e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711494594692:android:a6d7452575a5a3024dd2d1",
+        "android_client_info": {
+          "package_name": "api.petparent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7dtYd0eIqDF_rAz_Tw3HPqHncSh1bbWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
