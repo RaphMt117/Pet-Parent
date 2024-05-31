@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RestController
@@ -23,7 +24,7 @@ public class TasksController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<String> addTask(@PathVariable String userId, @RequestBody AddTaskRequestModel taskRequest) {
+    public ResponseEntity<String> addTask(@PathVariable String userId, @RequestBody AddTaskRequestModel taskRequest) throws ExecutionException, InterruptedException {
 
         var response = taskService.addTask(userId, taskRequest);
 
@@ -39,7 +40,7 @@ public class TasksController {
     }
 
     @DeleteMapping("/{userId}/{taskId}")
-    public ResponseEntity<String> deleteTask(@PathVariable String taskId, @PathVariable String userId) {
+    public ResponseEntity<String> deleteTask(@PathVariable String taskId, @PathVariable String userId) throws ExecutionException, InterruptedException {
 
         var response = taskService.deleteTask(taskId, userId);
 
