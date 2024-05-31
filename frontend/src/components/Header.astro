@@ -1,5 +1,9 @@
 ---
 const { title } = Astro.props;
+// const firstName = localStorage.getItem('firstName');
+// const lastName = localStorage.getItem('lastName');
+// const userName = firstName + ' ' + lastName;
+
 ---
 
 <header
@@ -27,12 +31,14 @@ flex flex-col lg:flex-row gap-8 items-center justify-center p-2 w-full h-0 opaci
       <a href="/searchServices">Buscar serviços</a>
     </nav>
     <div class="flex gap-2 items-center">
-      <p><p class="material-symbols-outlined text-3xl rounded-full shadow-lg p-2">Person</p></p>
+      <p>teste<p class="material-symbols-outlined text-3xl rounded-full shadow-lg p-2">Person</p></p>
     </div>
   </div>
 </header>
 
 <script>
+
+
   document
     .getElementById("toggleNavMenu")
     ?.addEventListener("click", function () {
