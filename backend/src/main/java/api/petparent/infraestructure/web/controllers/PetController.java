@@ -22,7 +22,7 @@ public class PetController {
         this.petService = petService;
     }
 
-    @PostMapping
+    @PostMapping("/{userId}")
     public ResponseEntity<String> addPet(@PathVariable String userId, @RequestBody AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException {
 
             var response = petService.addPet(userId, addPetRequestModel);
