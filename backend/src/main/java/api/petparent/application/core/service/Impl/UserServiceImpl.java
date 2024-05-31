@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Override
     public ResponseEntity<String> addUser(LoginRequest loginRequest) throws ExecutionException, InterruptedException {
 

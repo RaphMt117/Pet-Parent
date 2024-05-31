@@ -1,28 +1,35 @@
 package api.petparent.infraestructure.web.controllers;
 
+import api.petparent.application.core.service.PetService;
 import api.petparent.infraestructure.web.requests.pet.AddPetRequestModel;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RestController
 @RequestMapping("petparent/api/v1/pet")
 public class PetController {
 
+    @Autowired
+    private final PetService petService;
+
+    public PetController(PetService petService) {
+        this.petService = petService;
+    }
+
     @PostMapping
-    public ResponseEntity<String> addPet(@RequestBody AddPetRequestModel addPetRequestModel) {
-        try {
-            log.info("Adding pet");
-            return new ResponseEntity<>("Pet added", HttpStatus.OK);
-        } catch (Exception e) {
-            log.info("Error adding pet", e);
-            return new ResponseEntity<>("Error adding pet", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<String> addPet(@RequestBody AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException {
+
+            var response = petService.addPet(addPetRequestModel);
+
+            return response;
     }
 
     @GetMapping("/list/{userId}")

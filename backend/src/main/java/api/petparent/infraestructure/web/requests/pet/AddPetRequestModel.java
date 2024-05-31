@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddPetRequestModel {
+    private String userId;
     private String petName;
     private String petSpecies;
     private String petRace;

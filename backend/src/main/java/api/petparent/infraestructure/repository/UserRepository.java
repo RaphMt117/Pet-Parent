@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 public class UserRepository {
 
     public ResponseEntity<String> addUser(LoginRequest loginRequest) throws ExecutionException, InterruptedException {
-        CollectionReference db = FirestoreClient.getFirestore().collection("Users");
+        CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
 
         ApiFuture<QuerySnapshot> future = db.whereEqualTo("email", loginRequest.getEmail()).get();
 
@@ -35,26 +35,25 @@ public class UserRepository {
     }
 
     public ResponseEntity<String> deleteUser(String email) throws ExecutionException, InterruptedException {
-        CollectionReference db = FirestoreClient.getFirestore().collection("Users");
+        CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
 
-        ApiFuture<QuerySnapshot> future = db.whereEqualTo("email", email).get();
 
         try {
-            future.get().getDocuments().get(0);
+            ApiFuture<QuerySnapshot> future = db.whereEqualTo("email", email).get();
+            DocumentSnapshot document = future.get().getDocuments().get(0);
+            if (document.exists()) {
+                db.document(document.getId()).delete();
+                log.info("User deleted");
+                return new ResponseEntity<>("User deleted", HttpStatus.OK);
+            } else {
+                log.info("User not found");
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
         } catch (IndexOutOfBoundsException e) {
             log.info("User not found");
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
-        DocumentSnapshot document = future.get().getDocuments().get(0);
 
-        if (document.exists()) {
-            db.document(document.getId()).delete();
-            log.info("User deleted");
-            return new ResponseEntity<>("User deleted", HttpStatus.OK);
-        } else {
-            log.info("User not found");
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
     }
 
     public ResponseEntity<String> loginUser(LoginRequest loginRequest) {

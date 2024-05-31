@@ -41,3 +41,4 @@ build/
 /.idea/jarRepositories.xml
 /.mvn/wrapper/maven-wrapper.properties!/src/main/resources/serviceAccountKey.json
 !**/src/resouces/serviceAccountKey.json
+**/src/main/resources/
