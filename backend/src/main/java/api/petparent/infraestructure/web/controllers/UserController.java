@@ -33,16 +33,16 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> loginUser(@RequestBody LoginRequest userRequest) {
 
-        userService.loginUser(userRequest);
+        var response = userService.loginUser(userRequest);
 
-        return new ResponseEntity<>("Successful", HttpStatus.OK);
+        return response;
     }
 
     @DeleteMapping("/{email}")
     public ResponseEntity<String> deleteUser(@PathVariable String email) throws ExecutionException, InterruptedException {
 
-        userService.deleteUser(email);
+        var response = userService.deleteUser(email);
 
-        return new ResponseEntity<>("User Deleted", HttpStatus.OK);
+        return response;
     }
 }
