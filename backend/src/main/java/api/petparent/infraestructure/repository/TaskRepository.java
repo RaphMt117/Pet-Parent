@@ -1,7 +1,6 @@
 package api.petparent.infraestructure.repository;
 
 import api.petparent.application.core.dto.TaskDTO;
-import api.petparent.application.core.dto.UserDTO;
 import api.petparent.infraestructure.web.requests.AddTaskRequestModel;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -38,7 +37,7 @@ public class TaskRepository {
         return new ResponseEntity<>("Task added with ID: " + newTask.get().getId(), HttpStatus.OK);
     }
 
-    public ResponseEntity<ArrayList<TaskDTO>> getTasks(String userId) throws ExecutionException, InterruptedException {
+    public ResponseEntity<List<TaskDTO>> getTasks(String userId) throws ExecutionException, InterruptedException {
         CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
 
         log.info("Listing tasks to user:{} ", userId);
@@ -50,12 +49,19 @@ public class TaskRepository {
         }
 
         ApiFuture<QuerySnapshot> future = db.document(userId).collection("tasks").get();
-        ArrayList<QueryDocumentSnapshot> documents = (ArrayList<QueryDocumentSnapshot>) future.get().getDocuments();
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
-        ArrayList<TaskDTO> tasks = new ArrayList<>();
-        for (DocumentSnapshot document : documents) {
-            tasks.add(document.toObject(TaskDTO.class));
+        List<TaskDTO> tasks = new ArrayList<>();
+
+        if (documents.isEmpty()) {
+            return new ResponseEntity<>(tasks, HttpStatus.NOT_FOUND);
         }
+
+        for (QueryDocumentSnapshot document : documents) {
+            TaskDTO task = document.toObject(TaskDTO.class);
+            tasks.add(task);
+        }
+
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
@@ -88,13 +94,10 @@ public class TaskRepository {
         try {
             DocumentSnapshot document = future.get().getDocuments().get(0);
             if (document.exists()) {
-                taskDTO.setTaskId(document.getString("taskId"));
-                taskDTO.setTaskName(document.getString("taskName"));
-                taskDTO.setTaskDesc(document.getString("taskDesc"));
-                taskDTO.setTaskDate(document.getString("taskDate"));
-                taskDTO.setTaskPet(document.getString("taskPet"));
+                taskDTO.setTitle(document.getString("title"));
+                taskDTO.setStart(document.getString("start"));
+                taskDTO.setPet(document.getString("pet"));
 
-                log.info("Task found: {}", taskDTO);
                 return new ResponseEntity<>(taskDTO, HttpStatus.OK);
             } else {
                 log.info("Task not found");

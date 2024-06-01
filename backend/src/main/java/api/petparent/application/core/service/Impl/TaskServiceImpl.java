@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -27,9 +28,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public ResponseEntity<ArrayList<TaskDTO>> getTasks(String userId) throws ExecutionException, InterruptedException {
+    public ResponseEntity<List<TaskDTO>> getTasks(String userId) throws ExecutionException, InterruptedException {
         var response = taskRepository.getTasks(userId);
-        return null;
+        return response;
     }
 
     @Override

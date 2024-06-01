@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -32,7 +32,7 @@ public class TasksController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<ArrayList<TaskDTO>> getTasks(@PathVariable String userId) throws ExecutionException, InterruptedException {
+    public ResponseEntity<List<TaskDTO>> getTasks(@PathVariable String userId) throws ExecutionException, InterruptedException {
 
         var tasks = taskService.getTasks(userId);
 
