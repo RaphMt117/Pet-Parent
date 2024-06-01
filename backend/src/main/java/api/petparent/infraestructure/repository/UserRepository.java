@@ -31,6 +31,10 @@ public class UserRepository {
         }
 
         ApiFuture<DocumentReference> newUser = db.add(loginRequest);
+        ApiFuture<QuerySnapshot> futureUser = db.whereEqualTo("email", loginRequest.getEmail()).get();
+        String id = futureUser.get().getDocuments().get(0).getId();
+
+        db.document(id).collection("tasks");
 
         return new ResponseEntity<>("User added with ID: " + newUser.get().getId(), HttpStatus.OK);
     }

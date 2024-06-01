@@ -1,5 +1,6 @@
 package api.petparent.infraestructure.web.controllers;
 
+import api.petparent.application.core.dto.PetDTO;
 import api.petparent.application.core.service.PetService;
 import api.petparent.infraestructure.web.requests.AddPetRequestModel;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -31,13 +33,14 @@ public class PetController {
     }
 
     @GetMapping("/list/{userId}")
-    public ResponseEntity<String> listPets(@PathVariable String userId) {
+    public ResponseEntity<List<PetDTO>> listPets(@PathVariable String userId) {
         try {
+            var response = petService.listPets(userId);
             log.info("Listing pets from: {}", userId);
 
-            return new ResponseEntity<>("Pets listed", HttpStatus.OK);
+            return response;
         } catch (Exception e) {
-            return new ResponseEntity<>("Error listing pets", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -56,7 +59,6 @@ public class PetController {
     public ResponseEntity<String> deletePet(@PathVariable String petId) {
         try {
             log.info("Deleting pet: {}", petId);
-
             return new ResponseEntity<>("Pet deleted", HttpStatus.OK);
 
         } catch (Exception e) {
