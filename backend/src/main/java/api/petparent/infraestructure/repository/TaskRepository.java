@@ -94,6 +94,7 @@ public class TaskRepository {
         try {
             DocumentSnapshot document = future.get().getDocuments().get(0);
             if (document.exists()) {
+                taskDTO.setId(document.getId());
                 taskDTO.setTitle(document.getString("title"));
                 taskDTO.setStart(document.getString("start"));
                 taskDTO.setPet(document.getString("pet"));

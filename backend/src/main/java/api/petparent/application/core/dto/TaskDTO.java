@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class TaskDTO {
+    private String id;
     private String title;
     private String start;
     private String pet;
