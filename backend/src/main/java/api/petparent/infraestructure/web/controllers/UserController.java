@@ -31,17 +31,17 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequest userRequest) {
+    public ResponseEntity<String> getUser(@RequestBody LoginRequest userRequest) {
 
         var response = userService.loginUser(userRequest);
 
         return response;
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String email) throws ExecutionException, InterruptedException {
+    @GetMapping("/{email}/{password}")
+    public ResponseEntity<UserDTO> loginUser(@PathVariable String email, @PathVariable String password) throws ExecutionException, InterruptedException {
 
-        var response = userService.getUser(email);
+        var response = userService.loginUser(email, password);
 
         return response;
     }
