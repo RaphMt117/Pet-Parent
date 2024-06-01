@@ -108,8 +108,8 @@ import Layout from "../layouts/Layout.astro";
               required
             >
               <option value="#" selected disabled>Selecione</option>
-              <option value="Macho">Fêmea</option>
-              <option value="Femea">Macho</option>
+              <option value="Fêmea">Fêmea</option>
+              <option value="Macho">Macho</option>
               <option value="Desconhecido">Gênero Desconhecido</option>
             </select>
 
@@ -242,13 +242,17 @@ import Layout from "../layouts/Layout.astro";
     const taskHour = hourInput.value.trim();
     const taskPet = taskPetInput.value.trim();
 
-    const taskDate = new Date(taskDateInput)
-    const formattedTaskDate = taskDate.toLocaleDateString('pt-BR')
+    // Verifique se a data está no formato esperado (dd-mm-aaaa)
+    const [day, month, year] = taskDateInput.split("-");
+    const formattedTaskDate = `${year}-${month}-${day}`;
+
+    // Crie o objeto Date
+    const taskDate = new Date(formattedTaskDate).toLocaleDateString('pt-BR');
 
     const url = `http://localhost:8080/petparent/api/v1/task/${userId}`;
     const taskData = {
       title: taskTitle,
-      start: formattedTaskDate,
+      start: taskDate,
       pet: taskPet,
     };
 
@@ -261,7 +265,6 @@ import Layout from "../layouts/Layout.astro";
         },
       });
       if (response.ok) {
-        console.log("DEU CERTO ADICIONOU TASK");
         console.log(taskData);
         toggleTaskForm();
       } else if (response.status === 400) {
