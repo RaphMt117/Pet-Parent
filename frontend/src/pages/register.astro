@@ -159,11 +159,9 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </main>
   <Footer />
-
 </Layout>
 
 <script>
-
   document
     .getElementById("toggleNavMenu")
     ?.addEventListener("click", function () {
@@ -222,9 +220,8 @@ import Layout from "../layouts/Layout.astro";
         });
 
         if (response.status === 200) {
-        alert("Conta criada com sucesso!");
-        window.location.href = "/login";
-
+          alert("Conta criada com sucesso!");
+          window.location.href = "/login";
         } else if (response.status === 400) {
           alert("Ops! Houve um erro ao registrar a conta.");
         } else if (response.status === 409) {

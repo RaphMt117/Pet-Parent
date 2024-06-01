@@ -1,4 +1,5 @@
 ---
+import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import TextFormField from "../components/TextFormField.astro";
 import Layout from "../layouts/Layout.astro";
@@ -8,130 +9,179 @@ import Layout from "../layouts/Layout.astro";
   <Header title="Meus compromissos" />
 
   <main
-    class="mt-20 flex flex-col lg:flex-row lg:w-full justify-start lg:justify-evenly h-full"
+    class="mt-20 flex flex-col lg:w-full justify-start lg:justify-evenly h-full"
   >
-    <section class="w-full p-2">
-      <div class="calendar-container w-full shadow-md rounded-md p-6">
-        <h2 class="text-2xl">Meus compromissos</h2>
-        <button
-          id="add-new-task"
-          class="w-full bg-green-600 material-symbols-outlined p-3 rounded-2xl my-3"
-        >
-          add
-        </button>
-        <div id="calendar" class="mb-4"></div>
-        <div id="tasks-container"></div>
-      </div>
-    </section>
+    <div class="flex flex-col lg:flex-row">
+      <section class="w-full p-2">
+        <div class="calendar-container w-full shadow-md rounded-md p-6">
+          <h2 class="text-2xl">Meus compromissos</h2>
+          <button
+            id="add-new-task"
+            class="w-full bg-green-600 material-symbols-outlined p-3 rounded-2xl my-3"
+          >
+            add
+          </button>
+          <div id="calendar" class="mb-4"></div>
+          <div id="tasks-container"></div>
+        </div>
+      </section>
 
-    <section class="w-full p-2">
-      <div class="w-full shadow-md rounded-md p-6">
-        <h2 class="text-2xl mb-3">Meus Pets Cadastrados</h2>
-        <button
-          id="add-new-pet"
-          class="w-full bg-green-600 material-symbols-outlined p-3 rounded-2xl"
-        >
-          add
-        </button>
-        <div id="pets-container"></div>
-      </div>
-    </section>
+      <section class="w-full p-2">
+        <div class="w-full shadow-md rounded-md p-6">
+          <h2 class="text-2xl mb-3">Meus Pets Cadastrados</h2>
+          <button
+            id="add-new-pet"
+            class="w-full bg-green-600 material-symbols-outlined p-3 rounded-2xl"
+          >
+            add
+          </button>
+          <div id="pets-container"></div>
+        </div>
+      </section>
 
-    <section
-      id="new-pet-form"
-      class="fixed top-[-300px] left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
+      <section
+        id="new-pet-form"
+        class="fixed top-[-300px] left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
   flex flex-col gap-8 items-center justify-center w-full h-0 opacity-0 z-10"
-    >
-      <h2 class="text-xl text-primary">Adicionar novo Pet</h2>
-      <form id="add-new-pet-form">
-        <div class="flex items-baseline gap-3">
-          <TextFormField label="Nome" field="petName" />
-          <div class="flex flex-col gap-[8px]">
-            <label
-              for="petSpecies"
-              class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-              >Que tipo de pet é?</label
-            >
-            <select
-              name="petSpecies"
-              id="petSpecies"
-              class="text-dark h-[36px] rounded-md"
-              required
-            >
-              <option value="#" selected disabled>Selecione</option>
-              <option value="Cachorro">Cachorro</option>
-              <option value="Gato">Gato</option>
-              <option value="Roedor">Roedor</option>
-              <option value="Ave">Ave</option>
-              <option value="Lagarto">Lagarto</option>
-              <option value="Serpente">Serpente</option>
-              <option value="Anfíbio">Anfíbio</option>
-              <option value="Outro">Outro</option>
-            </select>
+      >
+        <h2 class="text-xl text-primary">Adicionar novo Pet</h2>
+        <form id="add-new-pet-form">
+          <div class="flex items-baseline gap-3">
+            <TextFormField label="Nome" field="petName" />
+            <div class="flex flex-col gap-[8px]">
+              <label
+                for="petSpecies"
+                class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
+                >Que tipo de pet é?</label
+              >
+              <select
+                name="petSpecies"
+                id="petSpecies"
+                class="text-dark h-[36px] rounded-md"
+                required
+              >
+                <option value="#" selected disabled>Selecione</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Roedor">Roedor</option>
+                <option value="Ave">Ave</option>
+                <option value="Lagarto">Lagarto</option>
+                <option value="Serpente">Serpente</option>
+                <option value="Anfíbio">Anfíbio</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div class="flex flex-col items-start gap-[8px] w-full">
-          <label
-            for="petAge"
-            class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-            >Idade (anos)</label
-          >
-          <input
-            type="number"
-            id="petAge"
-            name="petAge"
-            min="0"
-            max="200"
-            placeholder="Apenas números"
-            class="text-dark w-full px-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset
+          <div class="flex flex-col items-start gap-[8px] w-full">
+            <label
+              for="petAge"
+              class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
+              >Idade (anos)</label
+            >
+            <input
+              type="number"
+              id="petAge"
+              name="petAge"
+              min="0"
+              max="200"
+              placeholder="Apenas números"
+              class="text-dark w-full px-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset
           ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
+            />
+          </div>
 
-        <TextFormField label="Raça" field="petRace" />
+          <TextFormField label="Raça" field="petRace" />
 
-        <TextFormField label="Cor" field="petColor" />
-
-        <div class="flex flex-col items-start w-full gap-[8px]">
-          <label
-            for="petGender"
-            class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-            >Sexo</label
-          >
-          <select
-            name="petGender"
-            id="petGender"
-            class="text-dark h-[36px] rounded-md w-full"
-            required
-          >
-            <option value="#" selected disabled>Selecione</option>
-            <option value="Macho">Fêmea</option>
-            <option value="Femea">Macho</option>
-            <option value="Desconhecido">Gênero Desconhecido</option>
-          </select>
+          <TextFormField label="Cor" field="petColor" />
 
           <div class="flex flex-col items-start w-full gap-[8px]">
             <label
-              for="petSize"
+              for="petGender"
               class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
-              >Porte</label
+              >Sexo</label
             >
             <select
-              name="petSize"
-              id="petSize"
+              name="petGender"
+              id="petGender"
               class="text-dark h-[36px] rounded-md w-full"
               required
             >
               <option value="#" selected disabled>Selecione</option>
-              <option value="Pequeno">Pequeno</option>
-              <option value="Medio">Médio</option>
-              <option value="Grande">Grande</option>
+              <option value="Macho">Fêmea</option>
+              <option value="Femea">Macho</option>
+              <option value="Desconhecido">Gênero Desconhecido</option>
             </select>
+
+            <div class="flex flex-col items-start w-full gap-[8px]">
+              <label
+                for="petSize"
+                class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
+                >Porte</label
+              >
+              <select
+                name="petSize"
+                id="petSize"
+                class="text-dark h-[36px] rounded-md w-full"
+                required
+              >
+                <option value="#" selected disabled>Selecione</option>
+                <option value="Pequeno">Pequeno</option>
+                <option value="Medio">Médio</option>
+                <option value="Grande">Grande</option>
+              </select>
+            </div>
+            <div class="flex justify-between w-full gap-2 mt-3">
+              <button
+                id="close-pet-form"
+                type="button"
+                class="hover:text-red-700 rounded-lg px-4 py-2">Cancelar</button
+              >
+              <button
+                type="submit"
+                class="bg-green-600 hover:bg-emerald-800 rounded-lg px-4 py-2"
+                >Adicionar</button
+              >
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section
+        id="new-task-form"
+        class="fixed top-[-300px] left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
+  flex flex-col gap-8 items-center justify-center w-full h-0 opacity-0 z-10"
+      >
+        <h2 class="text-xl text-primary">Adicionar nova tarefa</h2>
+        <form class="">
+          <div class="flex flex-col items-center gap-3 w-full">
+            <TextFormField
+              id="task-title-input"
+              label="Titulo"
+              field="taskTitle"
+            />
+            <TextFormField
+              id="task-date-input"
+              label="Data"
+              field="taskDate"
+              placeholder="dd-mm-aaaa"
+            />
+            <TextFormField
+              id="task-hour-input"
+              label="Hora"
+              field="taskHour"
+              placeholder="xx:xx"
+            />
+            <TextFormField
+              id="task-pet-input"
+              label="De quem é o compromisso?"
+              field="taskPet"
+              placeholder="Nome do pet"
+            />
           </div>
           <div class="flex justify-between w-full gap-2 mt-3">
             <button
-              id="close-pet-form"
+              id="close-task-form"
               type="button"
               class="hover:text-red-700 rounded-lg px-4 py-2">Cancelar</button
             >
@@ -141,65 +191,11 @@ import Layout from "../layouts/Layout.astro";
               >Adicionar</button
             >
           </div>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+    </div>
 
-    <section
-      id="new-task-form"
-      class="fixed top-[-300px] left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
-  flex flex-col gap-8 items-center justify-center w-full h-0 opacity-0 z-10"
-    >
-      <h2 class="text-xl text-primary">Adicionar nova tarefa</h2>
-      <form class="">
-        <div class="flex flex-col items-center gap-3 w-full">
-          <TextFormField
-            id="task-title-input"
-            label="Titulo"
-            field="taskTitle"
-          />
-          <TextFormField
-            id="task-date-input"
-            label="Data"
-            field="taskDate"
-            placeholder="dd-mm-aaaa"
-          />
-          <TextFormField
-            id="task-hour-input"
-            label="Hora"
-            field="taskHour"
-            placeholder="xx:xx"
-          />
-          <TextFormField
-            id="task-pet-input"
-            label="De quem é o compromisso?"
-            field="taskPet"
-            placeholder="Nome do pet"
-          />
-        </div>
-        <div class="flex justify-between w-full gap-2 mt-3">
-          <button
-            id="close-task-form"
-            type="button"
-            class="hover:text-red-700 rounded-lg px-4 py-2">Cancelar</button
-          >
-          <button
-            type="submit"
-            class="bg-green-600 hover:bg-emerald-800 rounded-lg px-4 py-2"
-            >Adicionar</button
-          >
-        </div>
-      </form>
-    </section>
-
-    <footer class="">
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga itaque
-        eius mollitia sunt aperiam molestiae exercitationem voluptas natus,
-        consequuntur enim molestias ipsum deleniti nulla maxime repudiandae
-        dolorem odit tempore? Distinctio.
-      </p>
-    </footer>
+    <Footer />
   </main>
 </Layout>
 

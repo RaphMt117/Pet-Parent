@@ -32,6 +32,7 @@ flex flex-col lg:flex-row gap-8 items-center justify-center p-2 w-full h-0 opaci
     </nav>
     <div class="flex gap-2 items-center">
       <p>teste<p class="material-symbols-outlined text-3xl rounded-full shadow-lg p-2">Person</p></p>
+      <button id="logout-button" class="material-symbols-outlined text-red-600">Logout</button>
     </div>
   </div>
 </header>
@@ -48,4 +49,19 @@ flex flex-col lg:flex-row gap-8 items-center justify-center p-2 w-full h-0 opaci
       navMenu?.classList.toggle("opacity-0");
       navMenu?.classList.toggle("opacity-100");
     });
+
+    const logoutButton = document.getElementById('logout-button');
+    logoutButton?.addEventListener('click', function (event){
+      event.preventDefault();
+
+      const userConfirmed = confirm('Tem certeza que deseja fazer Logout?')
+
+      if (userConfirmed){
+        localStorage.clear();
+        window.location.href = "/";
+      } else {
+        return;
+      }
+
+    })
 </script>
