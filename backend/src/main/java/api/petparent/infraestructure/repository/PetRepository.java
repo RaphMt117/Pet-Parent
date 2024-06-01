@@ -82,12 +82,12 @@ public class PetRepository {
         log.info("Deleting pet: {}, from user: {}", petId, userId);
 
         ApiFuture<DocumentSnapshot> user = db.document(userId).get();
-        ApiFuture<DocumentSnapshot> task = db.document(userId).collection("tasks").document(petId).get();
+        ApiFuture<DocumentSnapshot> pet = db.document(userId).collection("pets").document(petId).get();
 
         if (!user.get().exists()) {
             return new ResponseEntity<>("User does not exist", HttpStatus.NOT_FOUND);
         }
-        if (!task.get().exists()) {
+        if (!pet.get().exists()) {
             return new ResponseEntity<>("Pet does not exist", HttpStatus.NOT_FOUND);
         }
 
