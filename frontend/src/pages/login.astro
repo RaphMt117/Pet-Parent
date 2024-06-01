@@ -148,14 +148,12 @@ import Footer from "../components/Footer.astro";
     const url = `http://localhost:8080/petparent/api/v1/user/${email}/${password}`;
 
     try {
-      alert("LOGIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
       
       const response = await fetch(url, {
         method: "GET",
       });
 
       if (response.ok) {
-        alert("LOGOU PORAAAAAAAAAAAAAAAAAAAAA");
 
         const userData = await response.json()
         console.log(userData)

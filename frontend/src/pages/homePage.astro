@@ -480,4 +480,15 @@ import Layout from "../layouts/Layout.astro";
     newTaskForm?.classList.toggle("top-[-300px]");
     newTaskForm?.classList.toggle("top-0");
   }
+
+  document
+    .getElementById("logout-button")
+    ?.addEventListener("click", function () {
+      const userConfirmed = confirm("Tem certeza que deseja fazer Logout?");
+
+      if (userConfirmed) {
+        localStorage.removeItem("user");
+        window.location.href = "/";
+      }
+    });
 </script>

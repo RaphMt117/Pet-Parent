@@ -1,15 +1,12 @@
 ---
 const { title } = Astro.props;
-// const firstName = localStorage.getItem('firstName');
-// const lastName = localStorage.getItem('lastName');
-// const userName = firstName + ' ' + lastName;
 
 ---
 
 <header
   class="bg-light dark:bg-dark w-full top-0 h-12 md:h-20 py-8 px-8 mb-4 md:px-12 xl:px-28 flex gap-12 items-center lg:justify-between shadow-md fixed z-10"
 >
-  <a href="/"><img src="pp_icon.png" alt="" class="w-16" /></a>
+  <a href="/homePage"><img src="pp_icon.png" alt="" class="w-16" /></a>
 
   <button
     id="toggleNavMenu"
@@ -31,15 +28,21 @@ flex flex-col lg:flex-row gap-8 items-center justify-center p-2 w-full h-0 opaci
       <a href="/searchServices">Buscar serviços</a>
     </nav>
     <div class="flex gap-2 items-center">
-      <p>teste<p class="material-symbols-outlined text-3xl rounded-full shadow-lg p-2">Person</p></p>
-      <button id="logout-button" class="material-symbols-outlined text-red-600">Logout</button>
+      <p>
+        <p
+          class="material-symbols-outlined text-3xl rounded-full shadow-lg p-2"
+        >
+          Person
+        </p>
+      </p>
+      <button id="logout-button" class="material-symbols-outlined text-red-600 z-20"
+        >Logout</button
+      >
     </div>
   </div>
 </header>
 
 <script>
-
-
   document
     .getElementById("toggleNavMenu")
     ?.addEventListener("click", function () {
@@ -50,18 +53,7 @@ flex flex-col lg:flex-row gap-8 items-center justify-center p-2 w-full h-0 opaci
       navMenu?.classList.toggle("opacity-100");
     });
 
-    const logoutButton = document.getElementById('logout-button');
-    logoutButton?.addEventListener('click', function (event){
-      event.preventDefault();
 
-      const userConfirmed = confirm('Tem certeza que deseja fazer Logout?')
 
-      if (userConfirmed){
-        localStorage.clear();
-        window.location.href = "/";
-      } else {
-        return;
-      }
-
-    })
+ 
 </script>

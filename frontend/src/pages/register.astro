@@ -210,6 +210,8 @@ import Layout from "../layouts/Layout.astro";
         return;
       } else if (password.length < 8) {
         alert("A senha precisa ter mais de 8 dígitos.");
+      } else if (password.includes("/") || password.includes(`\\`)) {
+        alert("Caracter inválido (/) presente na senha.");
       } else {
         const response = await fetch(url, {
           method: "POST",
