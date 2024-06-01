@@ -115,7 +115,6 @@ import Footer from "../components/Footer.astro";
     </div>
   </main>
   <Footer />
-
 </Layout>
 
 <script>
@@ -148,19 +147,18 @@ import Footer from "../components/Footer.astro";
     const url = `http://localhost:8080/petparent/api/v1/user/${email}/${password}`;
 
     try {
-      
       const response = await fetch(url, {
         method: "GET",
       });
 
       if (response.ok) {
+        
+        const userData = await response.json();
+        console.log(userData);
 
-        const userData = await response.json()
-        console.log(userData)
+        console.log(userData.userId);
 
-        console.log(userData.userId)
-
-        localStorage.setItem('user', JSON.stringify(userData))  
+        localStorage.setItem("user", JSON.stringify(userData));
         window.location.href = "/homePage";
       } else if (response.status === 400) {
         alert("Ops! Credenciais inválidas.");

@@ -167,12 +167,6 @@ import Layout from "../layouts/Layout.astro";
               placeholder="dd-mm-aaaa"
             />
             <TextFormField
-              id="task-hour-input"
-              label="Hora"
-              field="taskHour"
-              placeholder="xx:xx"
-            />
-            <TextFormField
               id="task-pet-input"
               label="De quem é o compromisso?"
               field="taskPet"
@@ -207,7 +201,7 @@ import Layout from "../layouts/Layout.astro";
   import { EventInput } from "@fullcalendar/core";
 
   const userData = localStorage.getItem("user");
-  let userId;
+  var userId;
 
   if (userData) {
     const user = JSON.parse(userData);
@@ -229,30 +223,26 @@ import Layout from "../layouts/Layout.astro";
     const dateInput = document.getElementById(
       "task-date-input"
     ) as HTMLInputElement;
-
-    const hourInput = document.getElementById(
-      "task-hour-input"
-    ) as HTMLInputElement;
     const taskPetInput = document.getElementById(
       "task-pet-input"
     ) as HTMLInputElement;
 
     const taskTitle = titleInput.value.trim();
     const taskDateInput = dateInput.value.trim();
-    const taskHour = hourInput.value.trim();
     const taskPet = taskPetInput.value.trim();
 
-    // Verifique se a data está no formato esperado (dd-mm-aaaa)
     const [day, month, year] = taskDateInput.split("-");
     const formattedTaskDate = `${year}-${month}-${day}`;
 
-    // Crie o objeto Date
-    const taskDate = new Date(formattedTaskDate).toLocaleDateString('pt-BR');
+    console.log(formattedTaskDate);
+
+    const taskDate = new Date(formattedTaskDate).toLocaleDateString("pt-BR");
+    console.log(taskDate);
 
     const url = `http://localhost:8080/petparent/api/v1/task/${userId}`;
     const taskData = {
       title: taskTitle,
-      start: taskDate,
+      start: formattedTaskDate,
       pet: taskPet,
     };
 
@@ -265,8 +255,9 @@ import Layout from "../layouts/Layout.astro";
         },
       });
       if (response.ok) {
-        console.log(taskData);
+        alert("Novo lembrete criado.");
         toggleTaskForm();
+        window.location.reload();
       } else if (response.status === 400) {
         console.log("Ops! Dados inseridos inválidos, tente novamente.");
       } else if (response.status === 500) {
@@ -276,14 +267,12 @@ import Layout from "../layouts/Layout.astro";
       console.log(e);
     }
   }
-
   async function loadTasksData() {
+    const url = `http://localhost:8080/petparent/api/v1/task/${userId}`;
     try {
-      const response = await fetch("src/data/tasks.json");
-
-      if (!response.ok) {
-        throw new Error("Erro ao carregar o arquivo JSON");
-      }
+      const response = await fetch(url, {
+        method: "GET",
+      });
 
       const tasks = await response.json();
       return tasks;
@@ -296,15 +285,13 @@ import Layout from "../layouts/Layout.astro";
     tasks.sort((a, b) => {
       return new Date(a.start).getTime() - new Date(b.start).getTime();
     });
-
-    initializeCalendar(tasks);
-    console.log(tasks);
+    const events = tasks;
+    console.log(events);
 
     tasks.forEach((task) => {
       const taskDate = new Date(task.start);
       const formattedDate = taskDate.toLocaleDateString("pt-BR");
-      console.log(task);
-      console.log(formattedDate);
+      // console.log(task);
       const container = document.getElementById("tasks-container");
       if (container) {
         const li = document.createElement("li");
@@ -318,18 +305,17 @@ import Layout from "../layouts/Layout.astro";
                 <p>${formattedDate}</p>
               </div>
             </div>
-            <button id="remove-pet" class="material-symbols-outlined text-red-600 mr-4"/>delete
+            <button id="" class="remove-task material-symbols-outlined text-red-600 mr-4"/>delete
  
           <div/>
           </div>`;
         container.appendChild(li);
       }
+      initializeCalendar(tasks);
     });
   });
 
   function initializeCalendar(events: EventInput[]): void {
-    console.log("calendario");
-
     const calendarEl = document.getElementById("calendar") as HTMLElement;
     if (calendarEl) {
       const calendar = new Calendar(calendarEl, {
@@ -337,7 +323,7 @@ import Layout from "../layouts/Layout.astro";
         initialView: "dayGridMonth",
         selectable: true,
         locale: ptBrLocale,
-        // events: events,
+        events: events,
         eventContent: function (arg) {
           return {
             html: `<div class="bg-primary text-white p-2 rounded overflow-hidden">${arg.event.title}</div>`,
@@ -349,10 +335,28 @@ import Layout from "../layouts/Layout.astro";
           };
         },
       });
-      console.log("CALEDNARA");
       calendar.render();
     }
   }
+
+  document
+    .querySelectorAll("#tasks-container button#remove-task")
+    .forEach((button) => {
+      button.addEventListener("click", async function (event) {
+        if (event.target instanceof HTMLElement) {
+          const taskId = event.target.dataset.taskId;
+          const url = `http://localhost:8080/petparent/api/v1`
+
+          if (taskId) {
+            const response = fetch('')
+          } else {
+            console.error("ID do task não encontrado.");
+          }
+        } else {
+          console.error("Elemento de evento inválido.");
+        }
+      });
+    });
 
   document
     .getElementById("add-new-pet-form")
@@ -370,7 +374,6 @@ import Layout from "../layouts/Layout.astro";
 
       console.log(petData);
 
-      const userId = "ZSPZBDz2VESQ2S6kQD1m";
       const url = `http://localhost:8080/petparent/api/v1/pet/${userId}`;
       petData.petAge = petData.petAge + " anos";
 
@@ -384,6 +387,7 @@ import Layout from "../layouts/Layout.astro";
 
       if (response.status === 200) {
         alert("Pet adicionado!");
+        window.location.reload();
         togglePetForm();
       } else if (response.status === 400) {
         alert("Ops! Houve um erro ao adicionar seu pet.");
@@ -391,13 +395,14 @@ import Layout from "../layouts/Layout.astro";
         alert("Houve um erro no servidor. Tente novamente mais tarde.");
       }
     });
-
   async function loadPetsData() {
     try {
-      const response = await fetch("src/data/pets.json");
+      const response = await fetch(
+        `http://localhost:8080/petparent/api/v1/pet/list/${userId}`
+      );
 
       if (!response.ok) {
-        throw new Error("Erro ao carregar o arquivo JSON");
+        throw new Error("Erro ao carregar os pets.");
       }
 
       const pets = await response.json();
@@ -420,7 +425,7 @@ import Layout from "../layouts/Layout.astro";
     return icons[type] || "paw-icon.png";
   }
 
-  await loadPetsData().then((pets) => {
+  loadPetsData().then((pets) => {
     pets.forEach((pet) => {
       console.log(pet);
       const iconImage = getPetIcon(pet.petSpecies);
@@ -439,7 +444,7 @@ import Layout from "../layouts/Layout.astro";
                 <p>${pet.petAge}</p>
               </div>
             </div>
-            <button id="remove-pet" class="material-symbols-outlined text-red-600 mr-4"/>delete
+            <button class="remove-pet material-symbols-outlined text-red-600 mr-4"/>delete
  
           <div/>
           </div>`;
@@ -447,6 +452,8 @@ import Layout from "../layouts/Layout.astro";
       }
     });
   });
+
+
 
   document
     .getElementById("add-new-pet")
