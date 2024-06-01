@@ -24,6 +24,7 @@ import Layout from "../layouts/Layout.astro";
             add
           </button>
           <div id="calendar" class="mb-4"></div>
+          <div id="tasks-container" class="mt-4"></div>
         </div>
       </section>
 
@@ -293,7 +294,7 @@ import Layout from "../layouts/Layout.astro";
     tasks.forEach((task) => {
       const taskDate = new Date(task.start);
       const formattedDate = taskDate.toLocaleDateString("pt-BR");
-      // console.log(task);
+      console.log(task);
       const container = document.getElementById("tasks-container");
       if (container) {
         const li = document.createElement("li");
@@ -316,6 +317,7 @@ import Layout from "../layouts/Layout.astro";
       }
       initializeCalendar(tasks);
     });
+
     document.querySelectorAll(".remove-task").forEach((button) => {
       button.addEventListener("click", async function (event) {
         if (event.target instanceof HTMLElement) {
