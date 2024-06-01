@@ -145,18 +145,24 @@ import Footer from "../components/Footer.astro";
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
-    const url = `http://localhost:8080/petparent/api/v1/user/login?email=${email}&password=${password}`;
+    const url = `http://localhost:8080/petparent/api/v1/user/${email}/${password}`;
 
     try {
       alert("LOGIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
-
+      
       const response = await fetch(url, {
         method: "GET",
       });
 
       if (response.ok) {
         alert("LOGOU PORAAAAAAAAAAAAAAAAAAAAA");
-        localStorage.setItem('user', JSON.stringify(response))
+
+        const userData = await response.json()
+        console.log(userData)
+
+        console.log(userData.userId)
+
+        localStorage.setItem('user', JSON.stringify(userData))  
         window.location.href = "/homePage";
       } else if (response.status === 400) {
         alert("Ops! Credenciais inválidas.");
@@ -164,7 +170,7 @@ import Footer from "../components/Footer.astro";
         alert("Houve um erro no servidor. Tente novamente mais tarde.");
       }
     } catch (e) {
-      alert("Não foi possível criar a conta: " + e);
+      alert("Não foi possível entrar na conta: " + e);
     }
   }
 </script>
