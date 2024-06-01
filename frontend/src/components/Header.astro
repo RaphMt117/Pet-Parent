@@ -26,15 +26,19 @@ flex flex-col lg:flex-row gap-8 items-center justify-center p-2 w-full h-0 opaci
     <nav class="lg:flex-1 flex gap-8 flex-col lg:flex-row">
       <a href="/homePage">Meus compromissos</a>
     </nav>
-    <div class="flex gap-2 items-center">
-      <p>
-        <p
+    <div class="flex gap-2 items-center ">
+      <div>
+        <div id="user-name-container" class="flex flex-row-reverse w-full items-center gap-2">
+
+          <p
           class="material-symbols-outlined text-3xl rounded-full shadow-lg p-2"
-        >
+          >
           Person
         </p>
-      </p>
-      <button id="logout-button" class="material-symbols-outlined text-red-600 z-20"
+        
+      </div>
+      </div>
+      <button id="logout-button" class="material-symbols-outlined mx-4 text-red-600 z-20"
         >Logout</button
       >
     </div>
@@ -52,7 +56,23 @@ flex flex-col lg:flex-row gap-8 items-center justify-center p-2 w-full h-0 opaci
       navMenu?.classList.toggle("opacity-100");
     });
 
+    const userData = localStorage.getItem("user");
+  var userId;
+  var userName;
+  if (userData) {
+    const user = JSON.parse(userData);
+    userId = user.userId;
+    const userFirstName = user.firstName;
+    const userLastName = user.lastName;
+    userName = userFirstName + " " + userLastName;
+  }
 
+    const container = document.getElementById("user-name-container");
+  if (container) {
+    const p = document.createElement("p");
+    p.innerHTML = `${userName}`;
+    container.appendChild(p);
+  }
 
  
 </script>
