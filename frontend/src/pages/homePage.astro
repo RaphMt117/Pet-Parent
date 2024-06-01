@@ -206,6 +206,16 @@ import Layout from "../layouts/Layout.astro";
   import ptBrLocale from "@fullcalendar/core/locales/pt-br";
   import { EventInput } from "@fullcalendar/core";
 
+  const userData = localStorage.getItem("user");
+  let userId;
+
+  if (userData) {
+    const user = JSON.parse(userData);
+    userId = user.userId;
+  }
+
+  console.log(userId);
+
   document
     .getElementById("new-task-form")
     ?.addEventListener("submit", createTask);
@@ -228,30 +238,17 @@ import Layout from "../layouts/Layout.astro";
     ) as HTMLInputElement;
 
     const taskTitle = titleInput.value.trim();
-    let taskDate = dateInput.value.trim();
+    const taskDateInput = dateInput.value.trim();
     const taskHour = hourInput.value.trim();
     const taskPet = taskPetInput.value.trim();
 
-    if (taskDate) {
-      const parts = taskDate.split("-");
-      if (parts.length === 3) {
-        const date = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
-        if (!isNaN(date.getTime())) {
-          taskDate = date.toLocaleDateString("pt-BR"); // Salvar a data em um formato padronizado
-        } else {
-          console.error("Data inválida:", taskDate);
-          return;
-        }
-      } else {
-        console.error("Formato de data inválido:", taskDate);
-        return;
-      }
-    }
-    const url = "src/data/tasks.json";
+    const taskDate = new Date(taskDateInput)
+    const formattedTaskDate = taskDate.toLocaleDateString('pt-BR')
+
+    const url = `http://localhost:8080/petparent/api/v1/task/${userId}`;
     const taskData = {
       title: taskTitle,
-      start: taskDate,
-      // taskHour: taskHour,
+      start: formattedTaskDate,
       pet: taskPet,
     };
 
@@ -259,6 +256,9 @@ import Layout from "../layouts/Layout.astro";
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(taskData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
       if (response.ok) {
         console.log("DEU CERTO ADICIONOU TASK");
@@ -334,7 +334,7 @@ import Layout from "../layouts/Layout.astro";
         initialView: "dayGridMonth",
         selectable: true,
         locale: ptBrLocale,
-        events: events,
+        // events: events,
         eventContent: function (arg) {
           return {
             html: `<div class="bg-primary text-white p-2 rounded overflow-hidden">${arg.event.title}</div>`,
