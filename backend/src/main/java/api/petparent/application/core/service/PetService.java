@@ -13,5 +13,5 @@ public interface PetService {
     ResponseEntity<String> addPet(String userId, AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException;
     ResponseEntity<List<PetDTO>> listPets(String userId) throws ExecutionException, InterruptedException;
     ResponseEntity<String> getPet(String userId, String petId);
-    ResponseEntity<String> deletePet(String petId);
+    ResponseEntity<String> deletePet(String userId, String petId) throws ExecutionException, InterruptedException;
 }

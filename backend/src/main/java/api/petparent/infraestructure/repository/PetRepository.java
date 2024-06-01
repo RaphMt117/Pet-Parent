@@ -75,4 +75,24 @@ public class PetRepository {
 
         return new ResponseEntity<>(pets, HttpStatus.OK);
     }
+
+    public ResponseEntity<String> deletePet(String userId, String petId) throws ExecutionException, InterruptedException {
+        CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
+
+        log.info("Deleting pet: {}, from user: {}", petId, userId);
+
+        ApiFuture<DocumentSnapshot> user = db.document(userId).get();
+        ApiFuture<DocumentSnapshot> task = db.document(userId).collection("tasks").document(petId).get();
+
+        if (!user.get().exists()) {
+            return new ResponseEntity<>("User does not exist", HttpStatus.NOT_FOUND);
+        }
+        if (!task.get().exists()) {
+            return new ResponseEntity<>("Pet does not exist", HttpStatus.NOT_FOUND);
+        }
+
+        db.document(userId).collection("pets").document(petId).delete();
+
+        return new ResponseEntity<>("Deleted pet with Id: " + petId, HttpStatus.OK);
+    }
 }

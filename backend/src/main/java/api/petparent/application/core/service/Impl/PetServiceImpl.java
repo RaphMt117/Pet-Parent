@@ -41,7 +41,10 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public ResponseEntity<String> deletePet(String petId) {
-        return null;
+    public ResponseEntity<String> deletePet(String userId, String petId) throws ExecutionException, InterruptedException {
+
+        var response = petRepository.deletePet(userId, petId);
+
+        return response;
     }
 }

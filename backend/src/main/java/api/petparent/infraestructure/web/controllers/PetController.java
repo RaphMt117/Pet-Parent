@@ -51,11 +51,12 @@ public class PetController {
         }
     }
 
-    @DeleteMapping("/{petId}")
-    public ResponseEntity<String> deletePet(@PathVariable String petId) {
+    @DeleteMapping("/{userId}/{petId}")
+    public ResponseEntity<String> deletePet(@PathVariable String userId, @PathVariable String petId) {
         try {
+            var response = petService.deletePet(userId, petId);
             log.info("Deleting pet: {}", petId);
-            return new ResponseEntity<>("Pet deleted", HttpStatus.OK);
+            return response;
 
         } catch (Exception e) {
             return new ResponseEntity<>("Error deleting pet", HttpStatus.INTERNAL_SERVER_ERROR);
