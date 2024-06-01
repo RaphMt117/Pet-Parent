@@ -73,13 +73,6 @@ import Footer from "../components/Footer.astro";
                 class="block text-sm font-medium leading-6 text-gray-900 dark:text-light"
                 >Senha</label
               >
-              <div class="text-sm">
-                <a
-                  href="#"
-                  class="font-semibold text-secondary hover:text-primary"
-                  >Esqueceu a senha?</a
-                >
-              </div>
             </div>
             <div class="mt-2">
               <input
@@ -152,7 +145,7 @@ import Footer from "../components/Footer.astro";
       });
 
       if (response.ok) {
-        
+
         const userData = await response.json();
         console.log(userData);
 

@@ -23,7 +23,9 @@ import Button from "../components/Button.astro";
     flex flex-col lg:flex-row gap-8 items-center justify-center w-full h-0 opacity-0 z-10 lg:h-full lg:opacity-100"
     >
       <nav class="lg:flex-1 flex gap-8 flex-col lg:flex-row">
-        <a href="https://davinicoletto.github.io/pet-parent-landing-page/">About</a>
+        <a href="https://davinicoletto.github.io/pet-parent-landing-page/"
+          >About</a
+        >
         <a href="/login">Login</a>
       </nav>
     </div>
@@ -56,7 +58,15 @@ import Button from "../components/Button.astro";
         navMenu?.classList.toggle("opacity-100");
       });
 
-      
+    checkLogin();
+    function checkLogin() {
+      const userLogged = localStorage.getItem("user");
 
+      if (userLogged) {
+        window.location.href = "/homePage";
+      } else {
+        return;
+      }
+    }
   </script>
 </Layout>

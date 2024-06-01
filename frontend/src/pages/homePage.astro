@@ -12,7 +12,9 @@ import Layout from "../layouts/Layout.astro";
     class="mt-20 flex flex-col lg:w-full justify-start lg:justify-evenly h-full"
   >
     <div class="flex flex-col lg:flex-row">
+      <div class="user-name-container"></div>
       <section class="w-full p-2">
+        
         <div class="calendar-container w-full shadow-md rounded-md p-6">
           <h2 class="text-2xl">Meus compromissos</h2>
           <button
@@ -22,7 +24,6 @@ import Layout from "../layouts/Layout.astro";
             add
           </button>
           <div id="calendar" class="mb-4"></div>
-          <div id="tasks-container"></div>
         </div>
       </section>
 
@@ -202,13 +203,14 @@ import Layout from "../layouts/Layout.astro";
 
   const userData = localStorage.getItem("user");
   var userId;
-
+  var userName;
   if (userData) {
     const user = JSON.parse(userData);
     userId = user.userId;
+    const userFirstName = user.firstName;
+    const userLastName = user.lastName;
+    userName = userFirstName + " " + userLastName;
   }
-
-  console.log(userId);
 
   document
     .getElementById("new-task-form")
@@ -305,13 +307,37 @@ import Layout from "../layouts/Layout.astro";
                 <p>${formattedDate}</p>
               </div>
             </div>
-            <button id="" class="remove-task material-symbols-outlined text-red-600 mr-4"/>delete
+            <button id="${task.id}" class="remove-task material-symbols-outlined text-red-600 mr-4"/>delete
  
           <div/>
           </div>`;
         container.appendChild(li);
+        console.log(task.id);
       }
       initializeCalendar(tasks);
+    });
+    document.querySelectorAll(".remove-task").forEach((button) => {
+      button.addEventListener("click", async function (event) {
+        if (event.target instanceof HTMLElement) {
+          const taskId = event.target.id;
+          console.log(taskId);
+          const url = `http://localhost:8080/petparent/api/v1/task/${userId}/${taskId}`;
+
+          const userConfirmed = confirm(
+            "Tem certeza que deseja excluir o lembrete?"
+          );
+
+          if (taskId && userConfirmed) {
+            console.log(url);
+            const response = fetch(url, { method: "DELETE" });
+            window.location.reload();
+          } else {
+            alert("Ocorreu um erro ao excluir o lembrete.");
+          }
+        } else {
+          alert("Ops! Algo deu errado, tente novamente.");
+        }
+      });
     });
   });
 
@@ -338,25 +364,6 @@ import Layout from "../layouts/Layout.astro";
       calendar.render();
     }
   }
-
-  document
-    .querySelectorAll("#tasks-container button#remove-task")
-    .forEach((button) => {
-      button.addEventListener("click", async function (event) {
-        if (event.target instanceof HTMLElement) {
-          const taskId = event.target.dataset.taskId;
-          const url = `http://localhost:8080/petparent/api/v1`
-
-          if (taskId) {
-            const response = fetch('')
-          } else {
-            console.error("ID do task não encontrado.");
-          }
-        } else {
-          console.error("Elemento de evento inválido.");
-        }
-      });
-    });
 
   document
     .getElementById("add-new-pet-form")
@@ -444,16 +451,40 @@ import Layout from "../layouts/Layout.astro";
                 <p>${pet.petAge}</p>
               </div>
             </div>
-            <button class="remove-pet material-symbols-outlined text-red-600 mr-4"/>delete
+            <button id="${pet.petId}" class="remove-pet material-symbols-outlined text-red-600 mr-4"/>delete
  
           <div/>
           </div>`;
         container.appendChild(li);
+        console.log(pet.petId);
       }
     });
+    document.querySelectorAll(".remove-pet").forEach((button) => {
+      button.addEventListener("click", async function (event) {
+        if (event.target instanceof HTMLElement) {
+          const petId = event.target.id;
+          console.log(petId);
+
+          const url = `http://localhost:8080/petparent/api/v1/pet/${userId}/${petId}`;
+
+          const userConfirmed = confirm(
+            `Tem certeza que deseja excluir o pet?`
+          );
+          if (userConfirmed) {
+            if (petId) {
+              console.log(url);
+              const response = fetch(url, { method: "DELETE" });
+              window.location.reload();
+            } else {
+              alert("Ocorreu um erro ao excluir o pet.");
+            }
+          } else {
+            return;
+          }
+        }
+      });
+    });
   });
-
-
 
   document
     .getElementById("add-new-pet")
@@ -501,4 +532,17 @@ import Layout from "../layouts/Layout.astro";
         window.location.href = "/";
       }
     });
+
+
+
+  checkLogin();
+  function checkLogin() {
+    const userLogged = localStorage.getItem("user");
+
+    if (userLogged) {
+      return;
+    } else {
+      window.location.href = "/";
+    }
+  }
 </script>
