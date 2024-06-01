@@ -32,7 +32,7 @@ public class TasksController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<ArrayList<TaskDTO>> getTasks(@PathVariable String userId) {
+    public ResponseEntity<ArrayList<TaskDTO>> getTasks(@PathVariable String userId) throws ExecutionException, InterruptedException {
 
         var tasks = taskService.getTasks(userId);
 

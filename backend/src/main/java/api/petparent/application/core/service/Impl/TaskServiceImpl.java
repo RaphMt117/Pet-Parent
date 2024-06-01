@@ -27,7 +27,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public ResponseEntity<ArrayList<TaskDTO>> getTasks(String userId) {
+    public ResponseEntity<ArrayList<TaskDTO>> getTasks(String userId) throws ExecutionException, InterruptedException {
         var response = taskRepository.getTasks(userId);
         return null;
     }

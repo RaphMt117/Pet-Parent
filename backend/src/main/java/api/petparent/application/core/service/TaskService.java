@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 public interface TaskService {
     ResponseEntity<String> addTask(String userId, AddTaskRequestModel taskRequest) throws ExecutionException, InterruptedException;
 
-    ResponseEntity<ArrayList<TaskDTO>> getTasks(String userId);
+    ResponseEntity<ArrayList<TaskDTO>> getTasks(String userId) throws ExecutionException, InterruptedException;
 
     ResponseEntity<String> deleteTask(String taskId, String userId) throws ExecutionException, InterruptedException;
 

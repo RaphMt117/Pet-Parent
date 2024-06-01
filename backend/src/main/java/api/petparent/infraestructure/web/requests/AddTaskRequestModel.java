@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class AddTaskRequestModel {
-    private String taskName;
-    private String taskDesc;
-    private String taskDate;
-    private String taskPet;
+    private String title;
+    private String start;
+    private String pet;
 }

@@ -4,16 +4,15 @@ import api.petparent.application.core.dto.TaskDTO;
 import api.petparent.application.core.dto.UserDTO;
 import api.petparent.infraestructure.web.requests.AddTaskRequestModel;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -22,7 +21,7 @@ public class TaskRepository {
     public ResponseEntity<String> addTask(String userId, AddTaskRequestModel taskRequest) throws ExecutionException, InterruptedException {
         CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
 
-        log.info("Adding pet to user: " + userId);
+        log.info("Adding task to user: " + userId);
 
         ApiFuture<DocumentSnapshot> user = db.document(userId).get();
 
@@ -30,8 +29,8 @@ public class TaskRepository {
             return new ResponseEntity<>("User does not exist", HttpStatus.NOT_FOUND);
         }
 
-        if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
-            return new ResponseEntity<>("Task name is required", HttpStatus.BAD_REQUEST);
+        if (taskRequest.getTitle() == null || taskRequest.getTitle().isEmpty()) {
+            return new ResponseEntity<>("Task title is required", HttpStatus.BAD_REQUEST);
         }
 
         var newTask = db.document(userId).collection("tasks").add(taskRequest);
@@ -39,9 +38,25 @@ public class TaskRepository {
         return new ResponseEntity<>("Task added with ID: " + newTask.get().getId(), HttpStatus.OK);
     }
 
-    public ResponseEntity<String> getTasks(String userId) {
+    public ResponseEntity<ArrayList<TaskDTO>> getTasks(String userId) throws ExecutionException, InterruptedException {
+        CollectionReference db = FirestoreClient.getFirestore().collection("pet_parents");
 
-        return null;
+        log.info("Listing tasks to user:{} ", userId);
+
+        ApiFuture<DocumentSnapshot> user = db.document(userId).get();
+
+        if (!user.get().exists()) {
+            throw new ExecutionException("User does not exist", null);
+        }
+
+        ApiFuture<QuerySnapshot> future = db.document(userId).collection("tasks").get();
+        ArrayList<QueryDocumentSnapshot> documents = (ArrayList<QueryDocumentSnapshot>) future.get().getDocuments();
+
+        ArrayList<TaskDTO> tasks = new ArrayList<>();
+        for (DocumentSnapshot document : documents) {
+            tasks.add(document.toObject(TaskDTO.class));
+        }
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteTask(String taskId, String userId) throws ExecutionException, InterruptedException {
