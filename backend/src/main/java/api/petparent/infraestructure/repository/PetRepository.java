@@ -69,6 +69,7 @@ public class PetRepository {
 
         for (QueryDocumentSnapshot document : documents) {
             PetDTO pet = document.toObject(PetDTO.class);
+            pet.setPetId(document.getId());
             pets.add(pet);
         }
 

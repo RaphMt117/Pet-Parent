@@ -58,6 +58,7 @@ public class TaskRepository {
 
         for (QueryDocumentSnapshot document : documents) {
             TaskDTO task = document.toObject(TaskDTO.class);
+            task.setId(document.getId());
             tasks.add(task);
         }
 
