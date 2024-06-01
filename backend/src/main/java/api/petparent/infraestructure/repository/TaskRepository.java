@@ -52,7 +52,6 @@ public class TaskRepository {
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
         List<TaskDTO> tasks = new ArrayList<>();
-
         if (documents.isEmpty()) {
             return new ResponseEntity<>(tasks, HttpStatus.NOT_FOUND);
         }

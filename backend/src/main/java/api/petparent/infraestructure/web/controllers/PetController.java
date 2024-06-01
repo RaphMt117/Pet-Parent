@@ -27,21 +27,17 @@ public class PetController {
     @PostMapping("/{userId}")
     public ResponseEntity<String> addPet(@PathVariable String userId, @RequestBody AddPetRequestModel addPetRequestModel) throws ExecutionException, InterruptedException {
 
-            var response = petService.addPet(userId, addPetRequestModel);
+        var response = petService.addPet(userId, addPetRequestModel);
 
-            return response;
+        return response;
     }
 
     @GetMapping("/list/{userId}")
-    public ResponseEntity<List<PetDTO>> listPets(@PathVariable String userId) {
-        try {
-            var response = petService.listPets(userId);
-            log.info("Listing pets from: {}", userId);
+    public ResponseEntity<List<PetDTO>> listPets(@PathVariable String userId) throws ExecutionException, InterruptedException {
+        var response = petService.listPets(userId);
+        log.info("Listing pets from: {}", userId);
 
-            return response;
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return response;
     }
 
     @GetMapping("/{userId}/{petId}")

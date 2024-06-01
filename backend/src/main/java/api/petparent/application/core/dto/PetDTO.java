@@ -13,5 +13,5 @@ public class PetDTO {
     private String petSize;
     private String petGender;
     private String petColor;
-    private Integer petAge;
+    private String petAge;
 }
