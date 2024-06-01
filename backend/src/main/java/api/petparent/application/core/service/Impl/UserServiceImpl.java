@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserDTO> getUser(String email) throws ExecutionException, InterruptedException {
+    public ResponseEntity<UserDTO> loginUser(String email, String password) throws ExecutionException, InterruptedException {
 
-        var response = userRepository.getUser(email);
+        var response = userRepository.getUser(email, password);
 
         return response;
     }

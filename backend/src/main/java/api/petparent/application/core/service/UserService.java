@@ -13,7 +13,7 @@ public interface UserService {
 
     ResponseEntity<String> deleteUser(String email) throws ExecutionException, InterruptedException;
 
-    ResponseEntity<UserDTO> getUser(String email) throws ExecutionException, InterruptedException;
+    ResponseEntity<UserDTO> loginUser(String email, String password) throws ExecutionException, InterruptedException;
 
     ResponseEntity<String> loginUser(LoginRequest loginRequest);
 }
