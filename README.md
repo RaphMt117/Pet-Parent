@@ -54,35 +54,17 @@
 
 Projeto desenvolvido durante a **Faculdade** de [ [ Análise e Desenvolvimento de Sistemas ](https://www.una.br/graduacao/analise-e-desenvolvimento-de-sistemas/?gad_source=1&gclid=CjwKCAjwx-CyBhAqEiwAeOcTdZ4_jPG42MPBBNPy-D6ymLMlDzXNEg-9qaahYUMV25BeF9d7G1m5pRoCjMsQAvD_BwE) ] pela [Una Betim](https://www.una.br/unidades/betim/).
 
-O projeto consiste em....
-
 ---
 
 ## ⚙️ To do
 
 - [ ]  Usuários:
-    - [ ] Autenticação de Usuário
+    - [x] Autenticação de Usuário
     - [ ] Alteração de características
     - [x] Implementação Firebase
     - [ ] 
 
 ---
-
-## 🎨 Layout
-
-O layout da aplicação está disponível no Figma:
-
-<a href="https://www.figma.com/files/project/77994470/%F0%9F%93%84-Templates-para-Projetos%2C-Eventos-e-Cursos?fuid=1110596132085818429">
-  <img alt="Made by Cubos Academy" src="https://img.shields.io/badge/Acessar%20Layout%20-Figma-%2304D361">
-</a>
-
-### Web
-
-<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="Nome do Projeto" title="Nome do Projeto" src="assets/LightMode.png" width="400px">
-
-  <img alt="Nome do Projeto" title="Nome do Projeto" src="assets/DarkMode.png" width="400px">
-</p>
 
 ---
 
@@ -202,7 +184,7 @@ Este projeto esta sobe a licença [MIT](LICENSE).
 
 Feito com ❤️ por Rafael Marques👋🏽 [Entre em contato!](https://www.linkedin.com/in/rafael-marques-e-torres/)
 <br>
-Feito com ❤️ por Davi Nicoletto👋🏽 [Entre em contato!](https://www.linkedin.com/in/davi-nicoletto/)
+Feito com empenho Davi Nicoletto👋🏽 [Entre em contato!](https://www.linkedin.com/in/davi-nicoletto/)
 <br>
 Feito com carinho pelo Davi Dias 👋🏽 [Entre em contato!](https://www.linkedin.com/in/davidiasads/)
 
