@@ -43,7 +43,7 @@ import Layout from "../layouts/Layout.astro";
 
       <section
         id="new-pet-form"
-        class="fixed top-[-300px] left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
+        class="fixed top-[-300px] left-0 text-gray-900 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
   flex flex-col gap-8 items-center justify-center w-full h-0 opacity-0 z-10"
       >
         <h2 class="text-xl text-primary">Adicionar novo Pet</h2>
@@ -151,7 +151,7 @@ import Layout from "../layouts/Layout.astro";
 
       <section
         id="new-task-form"
-        class="fixed top-[-300px] left-0 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
+        class="fixed top-[-300px] left-0 text-gray-900 bg-light dark:bg-dark bg-opacity-95 dark:bg-opacity-95 text-center transition-all duration-500
   flex flex-col gap-8 items-center justify-center w-full h-0 opacity-0 z-10"
       >
         <h2 class="text-xl text-primary">Adicionar nova tarefa</h2>
@@ -451,6 +451,7 @@ import Layout from "../layouts/Layout.astro";
                 <p>${pet.petSpecies}</p>
                 <p>${pet.petGender}</p>
                 <p>${pet.petAge}</p>
+                <p>${pet.petRace}</p>
               </div>
             </div>
             <button id="${pet.petId}" class="remove-pet material-symbols-outlined text-red-600 mr-4"/>delete
